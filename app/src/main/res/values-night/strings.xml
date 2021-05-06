@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kotlin - Marmitex</string>
+    <string name="app_name">Marmitex Kotlin</string>
     <string name="login_email">Email</string>
     <string name="password_text">password</string>
     <string name="button_login_text">Login</string>
