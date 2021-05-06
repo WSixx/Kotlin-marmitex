@@ -4,15 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.MyLoginFragment
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
-import br.com.lucad.kotlinmarmitex.models.Auth
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
+import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseUser
 import com.google.firebase.auth.FirebaseUser
 import io.github.cdimascio.dotenv.dotenv
 
@@ -60,25 +58,15 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         val user: FirebaseUser? = firebaseAuth.currentUser
         user?.let {
-            startActivity(Intent(this, MainActivity::class.java))
+            val currentUser = firebaseAuth.currentUser.uid
+            var intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("user", currentUser)
+            startActivity(intent)
             toast("Bem Vindo")
         }
     }
 
-    private fun signIn(){
-        val auth = Auth()
-        userEmail = editEmail.text.toString().trim()
-        userPassword = editPassword.text.toString().trim()
-        if(auth.signIn(userEmail,userPassword)){
-            startActivity(Intent(this, MainActivity::class.java))
-            toast("Logado com Sucesso")
-            finish()
-        }else{
-            toast("Error ao Logar")
-        }
-    }
-
-   /* private fun signIn() {
+   private fun signIn() {
         userEmail = editEmail.text.toString().trim()
         userPassword = editPassword.text.toString().trim()
 
@@ -86,28 +74,29 @@ class LoginActivity : AppCompatActivity() {
             firebaseAuth.signInWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { signIn ->
                     if (signIn.isSuccessful) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        toast("Logado com Sucesso")
+                        val currentUser = firebaseAuth.currentUser.uid
+                        var intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("user", currentUser)
+                        startActivity(intent)
+
+
+                        toast("Logado com Sucesso + $currentUser ++ ${firebaseAuth.currentUser.uid}")
                         finish()
                     } else {
                         //TODO: FAZER EXCEPTIONS
                         toast("Error ao Logar")
                     }
                 }
-                .addOnSuccessListener {
-                    toast("Sucesso")
-                }
         }else{
             toast("Digite os campos")
         }
-    }*/
+    }
 
     private fun signUp() {
         userEmail = editEmail.text.toString().trim()
         userPassword = editPassword.text.toString().trim()
 
         if(isNotEmpty()){
-            /*create a user*/
             firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -125,7 +114,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isNotEmpty(): Boolean = editEmail.text.toString().trim().isNotEmpty() &&
-            editPassword.text.toString().trim().isNotEmpty() &&
+            editEmail.text.toString().trim().isNotEmpty() &&
             editPassword.text.toString().trim().isNotEmpty()
 
 }
