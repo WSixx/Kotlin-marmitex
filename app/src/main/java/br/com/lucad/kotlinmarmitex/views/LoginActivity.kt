@@ -6,10 +6,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.MyLoginFragment
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
+import br.com.lucad.kotlinmarmitex.models.Auth
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import io.github.cdimascio.dotenv.dotenv
@@ -63,7 +65,20 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun signIn() {
+    private fun signIn(){
+        val auth = Auth()
+        userEmail = editEmail.text.toString().trim()
+        userPassword = editPassword.text.toString().trim()
+        if(auth.signIn(userEmail,userPassword)){
+            startActivity(Intent(this, MainActivity::class.java))
+            toast("Logado com Sucesso")
+            finish()
+        }else{
+            toast("Error ao Logar")
+        }
+    }
+
+   /* private fun signIn() {
         userEmail = editEmail.text.toString().trim()
         userPassword = editPassword.text.toString().trim()
 
@@ -85,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
         }else{
             toast("Digite os campos")
         }
-    }
+    }*/
 
     private fun signUp() {
         userEmail = editEmail.text.toString().trim()

@@ -1,18 +1,25 @@
 package br.com.lucad.kotlinmarmitex.models
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
+import br.com.lucad.kotlinmarmitex.MainActivity
+import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
+import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
+
 
 class Auth() {
-    private var auth: FirebaseAuth =  Firebase.auth
 
-    fun checkIsLogin(): Boolean{
-        // Initialize Firebase Auth
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        return currentUser != null
+    fun signIn(userEmail: String, userPassword: String): Boolean {
+        if (isNotEmpty(userEmail, userPassword)) {
+            FirebaseUtils.firebaseAuth.signInWithEmailAndPassword(userEmail, userPassword)
+                .addOnCompleteListener { signIn ->
+                    val isSuccessful = signIn.isSuccessful
+                    return@addOnCompleteListener
+                }
+        }
+        return false
     }
 
+    private fun isNotEmpty(userEmail: String, userPassword: String): Boolean =
+        userEmail.isNotEmpty() && userPassword.isNotEmpty()
 }
