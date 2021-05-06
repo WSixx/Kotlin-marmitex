@@ -9,6 +9,7 @@
 /.idea/assetWizardSettings.xml
 /app/src/main/assets/*
 /app/src/main/res/raw/*
+/app/google-services.json
 .DS_Store
 /build
 /captures
