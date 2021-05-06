@@ -5,11 +5,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class Auth() {
-    private lateinit var auth: FirebaseAuth
+    private var auth: FirebaseAuth =  Firebase.auth
 
     fun checkIsLogin(): Boolean{
         // Initialize Firebase Auth
-        auth = Firebase.auth
+
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         return currentUser != null
