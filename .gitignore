@@ -7,9 +7,12 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/app/src/main/assets
+/app/src/main/res/raw
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+

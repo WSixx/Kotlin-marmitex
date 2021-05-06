@@ -7,9 +7,10 @@ import io.github.cdimascio.dotenv.dotenv
 
 
 val dotenv = dotenv {
-    directory = "E:\\Kotlin\\Prj\\KotlinMarmitex\\app\\src\\main\\assets\\env"
+    directory = "./assets/"
     filename = "env" // use filename env, instead of .env
 } // <---- 1. Configure dotenv
+
 
 class LoginActivity : AppCompatActivity() {
 
