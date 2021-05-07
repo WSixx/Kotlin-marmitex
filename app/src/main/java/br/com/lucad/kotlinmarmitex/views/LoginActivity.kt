@@ -75,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    //teste
     private fun buttonCadastrarClick(){
         if(texViewCadastrar.text == "voltar"){
             texViewCadastrar.text = "Cadastrar-se"
