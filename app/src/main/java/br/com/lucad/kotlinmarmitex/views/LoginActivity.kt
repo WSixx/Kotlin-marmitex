@@ -9,11 +9,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import br.com.lucad.kotlinmarmitex.MainActivity
-import br.com.lucad.kotlinmarmitex.MyLoginFragment
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
+import br.com.lucad.kotlinmarmitex.models.setUser
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
-import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseUser
 import com.google.firebase.auth.FirebaseUser
 import io.github.cdimascio.dotenv.dotenv
 
@@ -35,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var buttonSignUp: Button
     private lateinit var userEmail: String
     private lateinit var userPassword: String
+    private lateinit var username: String
 
     lateinit var createAccountInputsArray: Array<EditText>
 
@@ -135,12 +135,16 @@ class LoginActivity : AppCompatActivity() {
     open fun signUp() {
         userEmail = editEmail.text.toString().trim()
         userPassword = editPassword.text.toString().trim()
+        username = editPassword.text.toString().trim()
 
         if (isNotEmpty()) {
             firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         toast("Conta criada com sucesso")
+                        val setUser = setUser()
+                        val currentUser = firebaseAuth.currentUser.uid
+                        setUser.writeNewUser(currentUser, "teste", userEmail)
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {
