@@ -1,30 +1,26 @@
 package br.com.lucad.kotlinmarmitex
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import br.com.lucad.kotlinmarmitex.views.LoginActivity
 
-class MyLoginFragment: DialogFragment() {
+class MyLoginFragment : DialogFragment() {
+
+    private lateinit var viewOfLayout: View
 
     companion object {
 
         const val TAG = "SimpleDialog"
 
-        private const val KEY_TITLE = "KEY_TITLE"
-        private const val KEY_SUBTITLE = "KEY_SUBTITLE"
-
-        fun newInstance(title: String, subTitle: String): MyLoginFragment {
-            val args = Bundle()
-            args.putString(KEY_TITLE, title)
-            args.putString(KEY_SUBTITLE, subTitle)
-            val fragment = MyLoginFragment()
-            fragment.arguments = args
-            return fragment
+        fun newInstance(): MyLoginFragment {
+            return MyLoginFragment()
         }
 
     }
@@ -33,13 +29,15 @@ class MyLoginFragment: DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.mylogin_fragment, container, false)
+    ): View {
+
+        viewOfLayout = inflater.inflate(R.layout.mylogin_fragment, container, false)
+        viewOfLayout.findViewById<Button>(R.id.button_fragment_login)
+        return viewOfLayout
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupView(view)
         setupClickListeners(view)
     }
 
@@ -51,20 +49,21 @@ class MyLoginFragment: DialogFragment() {
         )
     }
 
-    private fun setupView(view: View) {
-       // view.tvTitle.text = arguments?.getString(KEY_TITLE)
-       // view.tvSubTitle.text = arguments?.getString(KEY_SUBTITLE)
-    }
-
     private fun setupClickListeners(view: View) {
-        /*view.btnPositive.setOnClickListener {
-            // TODO: Do some task here
+        view.findViewById<Button>(R.id.button_fragment_login).setOnClickListener {
+            val editEmail = view.findViewById<EditText>(R.id.edit_fragment_user)
+            val editPassword = view.findViewById<EditText>(R.id.edit_fragment_password)
+
+            Toast.makeText(
+                it.context,
+                "${editEmail.text} ${editPassword.text}",
+                Toast.LENGTH_SHORT
+            ).show()
+            //val login = LoginActivity()
+           // login.signUp(editEmail.text.toString(), editPassword.text.toString())
             dismiss()
         }
-        view.btnNegative.setOnClickListener {
-            // TODO: Do some task here
-            dismiss()
-        }*/
     }
+
 
 }

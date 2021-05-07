@@ -2,9 +2,12 @@ package br.com.lucad.kotlinmarmitex.views
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.MyLoginFragment
 import br.com.lucad.kotlinmarmitex.R
@@ -25,6 +28,11 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var editEmail: EditText
     lateinit var editPassword: EditText
+    lateinit var editNome: EditText
+    lateinit var texViewLogin: TextView
+    lateinit var texViewCadastrar: TextView
+    lateinit var buttonSignIn: Button
+    lateinit var buttonSignUp: Button
     private lateinit var userEmail: String
     private lateinit var userPassword: String
 
@@ -35,22 +43,53 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val buttonSignIn = findViewById<Button>(R.id.button_signin)
-        val buttonSignUp = findViewById<Button>(R.id.button_signup)
-        editEmail = findViewById<EditText>(R.id.edit_email)
-        editPassword = findViewById<EditText>(R.id.edit_password)
+        buttonSignIn = findViewById<Button>(R.id.button_signin)
+        buttonSignUp = findViewById<Button>(R.id.button_signup)
+        editEmail = findViewById(R.id.edit_email)
+        editPassword = findViewById(R.id.edit_password)
+        editNome = findViewById(R.id.edit_nome)
+        texViewLogin = findViewById(R.id.text_view_login)
+        texViewCadastrar = findViewById(R.id.textView_cadastrar)
         createAccountInputsArray = arrayOf(editEmail, editPassword)
 
 
         buttonSignIn.setOnClickListener {
-            signIn()
+
+            if(texViewLogin.isVisible){
+                signIn()
+            }else{
+                //signUp()
+
+            }
         }
 
-
-        buttonSignUp.setOnClickListener{
-            MyLoginFragment.newInstance("Title", "SubTitle").show(supportFragmentManager, MyLoginFragment.TAG)
+        texViewCadastrar.setOnClickListener {
+            buttonCadastrarClick()
         }
 
+        buttonSignUp.setOnClickListener {
+            //MyLoginFragment.newInstance().show(supportFragmentManager, MyLoginFragment.TAG)
+           signUp()
+
+        }
+
+    }
+
+    private fun buttonCadastrarClick(){
+        if(texViewCadastrar.text == "voltar"){
+            texViewCadastrar.text = "Cadastrar-se"
+            texViewLogin.text = "Login"
+            buttonSignUp.visibility = View.GONE
+            buttonSignIn.visibility = View.VISIBLE
+            editNome.visibility = View.GONE
+
+        }else{
+            texViewCadastrar.text = "voltar"
+            texViewLogin.text = "Cadastrar"
+            buttonSignUp.visibility = View.VISIBLE
+            buttonSignIn.visibility = View.GONE
+            editNome.visibility = View.VISIBLE
+        }
     }
 
     /* check if there's a signed-in user*/
@@ -66,11 +105,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-   private fun signIn() {
+    private fun signIn() {
         userEmail = editEmail.text.toString().trim()
         userPassword = editPassword.text.toString().trim()
 
-        if(isNotEmpty()){
+        if (isNotEmpty()) {
             firebaseAuth.signInWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { signIn ->
                     if (signIn.isSuccessful) {
@@ -87,16 +126,16 @@ class LoginActivity : AppCompatActivity() {
                         toast("Error ao Logar")
                     }
                 }
-        }else{
+        } else {
             toast("Digite os campos")
         }
     }
 
-    private fun signUp() {
+    open fun signUp() {
         userEmail = editEmail.text.toString().trim()
         userPassword = editPassword.text.toString().trim()
 
-        if(isNotEmpty()){
+        if (isNotEmpty()) {
             firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -108,13 +147,12 @@ class LoginActivity : AppCompatActivity() {
                         toast("Error ao criar usuario")
                     }
                 }
-        }else{
+        } else {
             toast("Digite os campos")
         }
     }
 
     private fun isNotEmpty(): Boolean = editEmail.text.toString().trim().isNotEmpty() &&
-            editEmail.text.toString().trim().isNotEmpty() &&
             editPassword.text.toString().trim().isNotEmpty()
 
 }
