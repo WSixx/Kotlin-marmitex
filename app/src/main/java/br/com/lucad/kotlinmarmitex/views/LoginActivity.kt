@@ -11,7 +11,8 @@ import androidx.core.view.isVisible
 import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
-import br.com.lucad.kotlinmarmitex.models.setUser
+import br.com.lucad.kotlinmarmitex.models.SetUser
+import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import io.github.cdimascio.dotenv.dotenv
@@ -25,42 +26,39 @@ val dotenv = dotenv {
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var editEmail: EditText
-    lateinit var editPassword: EditText
-    lateinit var editNome: EditText
-    lateinit var texViewLogin: TextView
-    lateinit var texViewCadastrar: TextView
-    lateinit var buttonSignIn: Button
-    lateinit var buttonSignUp: Button
+    private lateinit var editEmail: EditText
+    private lateinit var editPassword: EditText
+    private lateinit var editNomeUser: EditText
+    private lateinit var texViewLogin: TextView
+    private lateinit var texViewCadastrar: TextView
+    private lateinit var buttonSignIn: Button
+    private lateinit var buttonSignUp: Button
     private lateinit var userEmail: String
     private lateinit var userPassword: String
-    private lateinit var username: String
+    private lateinit var userName: String
 
-    lateinit var createAccountInputsArray: Array<EditText>
+    private lateinit var createAccountInputsArray: Array<EditText>
 
     private val ev = dotenv["MY_EV"] // <---- 2. Get value from dotenv
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        buttonSignIn = findViewById<Button>(R.id.button_signin)
-        buttonSignUp = findViewById<Button>(R.id.button_signup)
+        buttonSignIn = findViewById(R.id.button_signin)
+        buttonSignUp = findViewById(R.id.button_signup)
+
         editEmail = findViewById(R.id.edit_email)
         editPassword = findViewById(R.id.edit_password)
-        editNome = findViewById(R.id.edit_nome)
+        editNomeUser = findViewById(R.id.edit_user_nome)
+
         texViewLogin = findViewById(R.id.text_view_login)
         texViewCadastrar = findViewById(R.id.textView_cadastrar)
+
         createAccountInputsArray = arrayOf(editEmail, editPassword)
 
 
         buttonSignIn.setOnClickListener {
-
-            if(texViewLogin.isVisible){
-                signIn()
-            }else{
-                //signUp()
-
-            }
+            if (texViewLogin.isVisible) signIn()
         }
 
         texViewCadastrar.setOnClickListener {
@@ -69,27 +67,27 @@ class LoginActivity : AppCompatActivity() {
 
         buttonSignUp.setOnClickListener {
             //MyLoginFragment.newInstance().show(supportFragmentManager, MyLoginFragment.TAG)
-           signUp()
+            signUp()
 
         }
 
     }
 
     //teste
-    private fun buttonCadastrarClick(){
-        if(texViewCadastrar.text == "voltar"){
+    private fun buttonCadastrarClick() {
+        if (texViewCadastrar.text == "voltar") {
             texViewCadastrar.text = "Cadastrar-se"
             texViewLogin.text = "Login"
             buttonSignUp.visibility = View.GONE
             buttonSignIn.visibility = View.VISIBLE
-            editNome.visibility = View.GONE
+            editNomeUser.visibility = View.GONE
 
-        }else{
+        } else {
             texViewCadastrar.text = "voltar"
             texViewLogin.text = "Cadastrar"
             buttonSignUp.visibility = View.VISIBLE
             buttonSignIn.visibility = View.GONE
-            editNome.visibility = View.VISIBLE
+            editNomeUser.visibility = View.VISIBLE
         }
     }
 
@@ -98,8 +96,8 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         val user: FirebaseUser? = firebaseAuth.currentUser
         user?.let {
-            val currentUser = firebaseAuth.currentUser.uid
-            var intent = Intent(this, MainActivity::class.java)
+            val currentUser = firebaseAuth.currentUser?.uid
+            val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("user", currentUser)
             startActivity(intent)
             toast("Bem Vindo")
@@ -114,13 +112,12 @@ class LoginActivity : AppCompatActivity() {
             firebaseAuth.signInWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { signIn ->
                     if (signIn.isSuccessful) {
-                        val currentUser = firebaseAuth.currentUser.uid
-                        var intent = Intent(this, MainActivity::class.java)
+                        val currentUser = firebaseAuth.currentUser?.uid
+                        val intent = Intent(this, MainActivity::class.java)
                         intent.putExtra("user", currentUser)
                         startActivity(intent)
 
-
-                        toast("Logado com Sucesso + $currentUser ++ ${firebaseAuth.currentUser.uid}")
+                        toast("Logado com Sucesso + $currentUser ++ ${firebaseAuth.currentUser?.uid}")
                         finish()
                     } else {
                         //TODO: FAZER EXCEPTIONS
@@ -132,20 +129,30 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    open fun signUp() {
+    private fun signUp() {
         userEmail = editEmail.text.toString().trim()
         userPassword = editPassword.text.toString().trim()
-        username = editPassword.text.toString().trim()
+        userName = editNomeUser.text.toString().trim()
 
         if (isNotEmpty()) {
             firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        toast("Conta criada com sucesso")
-                        val setUser = setUser()
-                        val currentUser = firebaseAuth.currentUser.uid
-                        setUser.writeNewUser(currentUser, "teste", userEmail)
-                        startActivity(Intent(this, MainActivity::class.java))
+                        val setUser = SetUser()
+                        val user = User()
+                        val currentUserUID = firebaseAuth.currentUser?.uid
+
+                        user.let {
+                            it.id = currentUserUID
+                            it.username = userName
+                            it.email = userEmail
+                        }
+
+                        setUser.registerUser(this@LoginActivity, user)
+                        setUser.writeNewUser(user)
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("user", currentUserUID)
+                        startActivity(intent)
                         finish()
                     } else {
                         //TODO: FAZER EXCEPTIONS
@@ -155,6 +162,10 @@ class LoginActivity : AppCompatActivity() {
         } else {
             toast("Digite os campos")
         }
+    }
+
+    fun userRegisterSuccessful() {
+        toast("Conta criada com sucesso")
     }
 
     private fun isNotEmpty(): Boolean = editEmail.text.toString().trim().isNotEmpty() &&
