@@ -2,6 +2,7 @@ package br.com.lucad.kotlinmarmitex.models
 
 import android.util.Log
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
+import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import br.com.lucad.kotlinmarmitex.views.LoginActivity
 import com.google.firebase.firestore.SetOptions
@@ -17,18 +18,17 @@ data class User(
 
 class SetUser {
     fun writeNewUser(user: User) {
-        FirebaseUtils.firebaseDatabase.child("users").child(user.id!!).setValue(user)
+        FirebaseUtils.firebaseDatabase.child(Constants.USERS).child(user.id!!).setValue(user)
     }
 
     fun registerUser(activity: LoginActivity, userInfo: User) {
-        FirebaseUtils.firebaseFirestore.collection("users")
+        FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
             .document(userInfo.id!!)
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 //activity.toast("Cadastro feito")
             }
             .addOnFailureListener {
-                Log.d("Register", "Error ao cadastrar Usuario")
                 activity.toast("Error ao cadastrar Usuario - Register")
             }
     }

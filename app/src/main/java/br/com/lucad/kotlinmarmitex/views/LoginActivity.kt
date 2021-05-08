@@ -13,6 +13,7 @@ import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
+import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import io.github.cdimascio.dotenv.dotenv
@@ -125,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
         } else {
-            toast("Digite os campos")
+            userBlankFields()
         }
     }
 
@@ -160,13 +161,19 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
         } else {
-            toast("Digite os campos")
+            userBlankFields()
         }
     }
 
     fun userRegisterSuccessful() {
         toast("Conta criada com sucesso")
     }
+
+    private fun userBlankFields() {
+        toast(Constants.BLANK_FIELD)
+    }
+
+
 
     private fun isNotEmpty(): Boolean = editEmail.text.toString().trim().isNotEmpty() &&
             editPassword.text.toString().trim().isNotEmpty()
