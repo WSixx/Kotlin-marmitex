@@ -1,6 +1,6 @@
 package br.com.lucad.kotlinmarmitex.models
 
-import android.util.Log
+import android.app.Activity
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
@@ -27,6 +27,7 @@ class SetUser {
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 //activity.toast("Cadastro feito")
+                activity.hideProgressLogin()
             }
             .addOnFailureListener {
                 activity.toast("Error ao cadastrar Usuario - Register")
@@ -36,12 +37,34 @@ class SetUser {
     fun getCurrentUserId(): String {
         val currentUser = FirebaseUtils.firebaseUser
 
-        //
         var currentUserId = ""
         if (currentUser != null) {
             currentUserId = currentUser.uid
         }
 
         return currentUserId
+    }
+
+    fun getUserInfo(activity: Activity){
+        println(getCurrentUserId())
+        FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .get()
+            .addOnSuccessListener { document ->
+                val user = document.toObject(User::class.java)
+
+                when(activity){
+                    is LoginActivity -> {
+                        activity.userIsLogged(user)
+                    }
+                }
+            }
+            .addOnFailureListener{
+                when(activity){
+                    is LoginActivity -> {
+                        activity.hideProgressLogin()
+                    }
+                }
+            }
     }
 }

@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val currentUser = FirebaseUtils.firebaseAuth.currentUser.email
+        val currentUser = FirebaseUtils.firebaseAuth.currentUser.displayName
 
         val textView = findViewById<TextView>(R.id.texte_view_teste)
         val buttonMain = findViewById<Button>(R.id.button_main)
@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         textView.text = currentUser
 
         buttonMain.setOnClickListener {
-            val addToCart = Meals()
-            addToCart.addToCart("ajaha", "Ola")
+            FirebaseUtils.firebaseAuth.signOut()
+            finish()
         }
 
     }
