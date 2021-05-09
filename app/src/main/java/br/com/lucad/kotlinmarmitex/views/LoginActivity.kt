@@ -119,8 +119,8 @@ class LoginActivity : AppCompatActivity() {
                     if (signIn.isSuccessful) {
                         SetUser().getUserInfo(this@LoginActivity)
                     } else {
-                        //TODO: FAZER EXCEPTIONS
                         toast("Error ao Logar")
+                        hideProgressLogin()
                     }
                 }
         } else {

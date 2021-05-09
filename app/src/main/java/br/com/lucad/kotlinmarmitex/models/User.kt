@@ -5,6 +5,7 @@ import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import br.com.lucad.kotlinmarmitex.views.LoginActivity
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.SetOptions
 
 data class User(
@@ -38,15 +39,16 @@ class SetUser {
         val currentUser = FirebaseUtils.firebaseUser
 
         var currentUserId = ""
-        if (currentUser != null) {
-            currentUserId = currentUser.uid
+        val user: FirebaseUser? = FirebaseUtils.firebaseAuth.currentUser
+        user?.let {
+            currentUserId = FirebaseUtils.firebaseAuth.currentUser?.uid.toString()
         }
 
         return currentUserId
     }
 
     fun getUserInfo(activity: Activity){
-        println(getCurrentUserId())
+        println("GET: " + getCurrentUserId())
         FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .get()
