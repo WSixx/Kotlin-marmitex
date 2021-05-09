@@ -13,7 +13,9 @@ import com.google.firebase.firestore.SetOptions
 data class User(
     var id: String? = null,
     var username: String? = null,
-    var email: String? = null
+    var email: String? = null,
+    var phoneNumber: String = "",
+    var profileIsComplete: Int = 0
 ) {
     // Null default values create a no-argument default constructor, which is needed
     // for deserialization from a DataSnapshot.
@@ -36,7 +38,7 @@ class SetUser {
             }
     }
 
-    fun getCurrentUserId(): String {
+    private fun getCurrentUserId(): String {
         val currentUser = FirebaseUtils.firebaseUser
 
         var currentUserId = ""

@@ -2,7 +2,6 @@ package br.com.lucad.kotlinmarmitex.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -10,6 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import br.com.lucad.kotlinmarmitex.EditProfile
 import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
@@ -17,7 +17,6 @@ import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import io.github.cdimascio.dotenv.dotenv
 
 
@@ -74,9 +73,7 @@ class LoginActivity : AppCompatActivity() {
         buttonSignUp.setOnClickListener {
             //MyLoginFragment.newInstance().show(supportFragmentManager, MyLoginFragment.TAG)
             signUp()
-
         }
-
     }
 
     //teste
@@ -100,12 +97,13 @@ class LoginActivity : AppCompatActivity() {
     /* check if there's a signed-in user*/
     override fun onStart() {
         super.onStart()
-        val user: FirebaseUser? = firebaseAuth.currentUser
-        user?.let {
-            val currentUser = firebaseAuth.currentUser?.uid
-            startMainActivity()
-            toast("Bem Vindo")
-        }
+        /*val user = User()
+        userIsLogged(user)*/
+       /* val fireUser: FirebaseUser? = firebaseAuth.currentUser
+        val user = User()
+        fireUser?.let {
+            userIsLogged(user)
+        }*/
     }
 
     private fun signIn() {
@@ -152,7 +150,7 @@ class LoginActivity : AppCompatActivity() {
 
                         setUser.registerUser(this@LoginActivity, user)
                         setUser.writeNewUser(user)
-                        startMainActivity()
+                        userIsLogged(user)
                         finish()
                     } else {
                         //TODO: FAZER EXCEPTIONS
@@ -166,17 +164,16 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun startMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
     fun userIsLogged(user: User?) {
         hideProgressLogin()
-        Log.i("Name: ", user?.username!!)
-        Log.i("Name: ", user.email!!)
 
-        startMainActivity()
+        if(user?.profileIsComplete == 0){
+            val intent = Intent(this, EditProfile::class.java)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
         finish()
     }
 

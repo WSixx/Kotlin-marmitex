@@ -13,9 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMarmitex"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditProfile"></activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".views.LoginActivity">
+        <activity android:name=".EditProfile"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".views.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

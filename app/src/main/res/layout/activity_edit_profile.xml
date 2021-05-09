@@ -6,11 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     tools:context=".EditProfile">
 
+    <Toolbar
+        android:id="@+id/toolbar_editar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar Perfil"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title" />
+    </Toolbar>
 
-    <ImageView
+
+
+
+<ImageView
         android:id="@+id/imageView_profile_pic_edit"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -29,9 +44,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="b">
+            android:gravity="center">
 
             <EditText
+                android:id="@+id/editText_edit_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -40,11 +56,23 @@
                 android:padding="15dp" />
 
             <EditText
+                android:id="@+id/editText_edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:inputType="textEmailAddress"
                 android:background="@drawable/edit_back_color_black"
                 android:hint="Email"
+                android:padding="15dp" />
+
+            <EditText
+                android:id="@+id/editText_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:inputType="phone"
+                android:background="@drawable/edit_back_color_black"
+                android:hint="Phone"
                 android:padding="15dp" />
 
             <Button
