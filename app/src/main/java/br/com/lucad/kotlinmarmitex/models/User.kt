@@ -1,6 +1,8 @@
 package br.com.lucad.kotlinmarmitex.models
 
 import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
@@ -27,7 +29,6 @@ class SetUser {
             .document(userInfo.id!!)
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
-                //activity.toast("Cadastro feito")
                 activity.hideProgressLogin()
             }
             .addOnFailureListener {
@@ -47,6 +48,7 @@ class SetUser {
         return currentUserId
     }
 
+    //https://firebase.google.com/docs/firestore/query-data/get-data#kotlin+ktx_2
     fun getUserInfo(activity: Activity){
         println("GET: " + getCurrentUserId())
         FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
@@ -54,6 +56,8 @@ class SetUser {
             .get()
             .addOnSuccessListener { document ->
                 val user = document.toObject(User::class.java)
+
+                saveToMySharedPreferences(activity, user?.username)
 
                 when(activity){
                     is LoginActivity -> {
@@ -68,5 +72,20 @@ class SetUser {
                     }
                 }
             }
+    }
+
+    private fun saveToMySharedPreferences(activity: Activity, userName: String?){
+        val sharedPreferences = activity.getSharedPreferences(
+            Constants.MY_SHARE_PREF,
+            Context.MODE_PRIVATE
+        )
+        //key: Constants.USERNAME_LOGGED
+        //value: username
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString(
+            Constants.USERNAME_LOGGED,
+            "$userName"
+        )
+        editor.apply()
     }
 }
