@@ -60,13 +60,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:inputType="textEmailAddress"
                 android:background="@drawable/edit_back_color_black"
                 android:hint="Email"
                 android:padding="15dp" />
 
             <EditText
-                android:id="@+id/editText_phone"
+                android:id="@+id/editText_edit_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

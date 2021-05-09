@@ -3,25 +3,27 @@ package br.com.lucad.kotlinmarmitex.models
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Parcelable
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import br.com.lucad.kotlinmarmitex.views.LoginActivity
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.SetOptions
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class User(
     var id: String? = null,
     var username: String? = null,
     var email: String? = null,
     var phoneNumber: String = "",
     var profileIsComplete: Int = 0
-) {
-    // Null default values create a no-argument default constructor, which is needed
-    // for deserialization from a DataSnapshot.
+) : Parcelable {
 }
 
-class SetUser {
+
+class SetUser() {
     fun writeNewUser(user: User) {
         FirebaseUtils.firebaseDatabase.child(Constants.USERS).child(user.id!!).setValue(user)
     }
