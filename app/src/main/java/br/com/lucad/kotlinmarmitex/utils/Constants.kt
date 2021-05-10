@@ -8,4 +8,6 @@ object Constants {
     const val MY_SHARE_PREF: String = "MySharePref"
     const val USERNAME_LOGGED: String = "username_logged"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
+
+    const val PHONE: String = "phone"
 }
