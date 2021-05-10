@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMarmitex"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditProfile"
+        <activity android:name=".views.EditProfileActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"

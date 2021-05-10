@@ -9,10 +9,11 @@ object Constants {
     const val USERNAME_LOGGED: String = "username_logged"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
 
+    const val PROFILE_IS_COMPLETE: String = "profileIsComplete"
     const val PHONE: String = "phone"
     const val DDD: String = "ddd"
     const val CITY: String = "city"
     const val UF: String = "uf"
     const val STREET: String = "street"
-    const val DISCTRICT: String = "district"
+    const val DISTRICT: String = "district"
 }
