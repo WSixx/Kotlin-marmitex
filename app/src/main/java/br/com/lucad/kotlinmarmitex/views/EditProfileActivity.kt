@@ -1,4 +1,4 @@
-package br.com.lucad.kotlinmarmitex
+package br.com.lucad.kotlinmarmitex.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,12 +7,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import br.com.lucad.kotlinmarmitex.MainActivity
+import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
 
-class EditProfile : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity() {
 
     lateinit var editProfileNome: EditText
     lateinit var editProfileEmail: EditText
@@ -51,54 +53,60 @@ class EditProfile : AppCompatActivity() {
 
 
         editProfileNome.isEnabled = false
-        editProfileNome.setText(user?.username)
+        editProfileNome.setText(user.username)
         editProfileEmail.isEnabled = false
-        editProfileEmail.setText(user?.email)
+        editProfileEmail.setText(user.email)
 
         saveDataButton()
 
     }
 
-    private fun saveDataButton(){
+    private fun updateUserProfileDetails(){
+        if(checkIfPhoneIsEmpty()){
+            progressEdit.visibility = View.VISIBLE
+            buttonSave.isEnabled = false
+            val userHashMap = HashMap<String, Any>()
+            val phone = editProfilePhone.text.toString().trim()
+            val ddd = editProfileDDD.text.toString().trim()
+            val city = editProfileCity.text.toString().trim()
+            val uf = editProfileUF.text.toString().trim()
+            val street = editProfileStreet.text.toString().trim()
+            val district = editProfileDistrict.text.toString().trim()
 
-        buttonSave.setOnClickListener {
-            if(checkIfPhoneIsEmpty()){
-                progressEdit.visibility = View.VISIBLE
-                buttonSave.isEnabled = false
-                val userHashMap = HashMap<String, Any>()
-                var phone = editProfilePhone.text.toString().trim()
-                var ddd = editProfileDDD.text.toString().trim()
-                var city = editProfileCity.text.toString().trim()
-                var uf = editProfileUF.text.toString().trim()
-                var street = editProfileStreet.text.toString().trim()
-                var district = editProfileDistrict.text.toString().trim()
+            userHashMap[Constants.PHONE] = phone
+            userHashMap[Constants.DDD] = ddd
+            userHashMap[Constants.CITY] = city
+            userHashMap[Constants.UF] = uf
+            userHashMap[Constants.DISTRICT] = district
+            userHashMap[Constants.STREET] = street
+            userHashMap[Constants.PROFILE_IS_COMPLETE] = 1
 
-                userHashMap[Constants.PHONE] = phone
-                userHashMap[Constants.DDD] = ddd
-                userHashMap[Constants.CITY] = city
-                userHashMap[Constants.UF] = uf
-                userHashMap[Constants.DISCTRICT] = district
-                userHashMap[Constants.STREET] = street
-                //userHashMap["profileIsComplete"] = 1
-
-                SetUser().updateUserInfo(this, userHashMap )
-            }
+            SetUser().updateUserInfo(this, userHashMap )
         }
     }
 
+    private fun saveDataButton(){
+
+        buttonSave.setOnClickListener {
+           updateUserProfileDetails()
+        }
+    }
+
+
+
     private fun checkIfPhoneIsEmpty(): Boolean{
-        val phone = editProfilePhone.text
-        val city = editProfileCity.text
-        val street = editProfileStreet.text
-        val uf = editProfileUF.text
-        val ddd = editProfileDDD.text
-        val district = editProfileDistrict.text
-        return if(phone.isNullOrEmpty() || phone.isNullOrBlank() || phone.length < 9
-            || city.isNullOrEmpty() || city.isNullOrBlank() || city.length < 3
-            || street.isNullOrEmpty() || street.isNullOrBlank() || street.length < 5
-            || uf.isNullOrEmpty() || uf.isNullOrBlank()
-            || ddd.isNullOrEmpty() || ddd.isNullOrBlank()
-            || district.isNullOrEmpty() || district.isNullOrBlank() || district.length < 4
+        val phone = editProfilePhone.text.toString().trim()
+        val city = editProfileCity.text.toString().trim()
+        val street = editProfileStreet.text.toString().trim()
+        val uf = editProfileUF.text.toString().trim()
+        val ddd = editProfileDDD.text.toString().trim()
+        val district = editProfileDistrict.text.toString().trim()
+        return if(phone.isEmpty() || phone.isBlank() || phone.length < 9
+            || city.isEmpty() || city.isBlank() || city.length < 3
+            || street.isEmpty() || street.isBlank() || street.length < 5
+            || uf.isEmpty() || uf.isBlank()
+            || ddd.isEmpty() || ddd.isBlank()
+            || district.isEmpty() || district.isBlank() || district.length < 4
         ){
             toast("Digite um Dados Válidos")
             false

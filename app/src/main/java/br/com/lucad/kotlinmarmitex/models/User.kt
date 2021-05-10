@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Parcelable
 import android.util.Log
-import br.com.lucad.kotlinmarmitex.EditProfile
+import br.com.lucad.kotlinmarmitex.views.EditProfileActivity
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
@@ -57,7 +57,7 @@ class SetUser() {
             .addOnSuccessListener {
 
                 when (activity){
-                    is EditProfile -> {
+                    is EditProfileActivity -> {
                        activity.afterSaveNewInformationSuccessful()
                     }
                 }
@@ -66,7 +66,7 @@ class SetUser() {
             .addOnFailureListener {e ->
 
                 when (activity){
-                    is EditProfile -> {
+                    is EditProfileActivity -> {
                         activity.hideProgressEdit()
                         activity.buttonSave.isEnabled = true
                     }

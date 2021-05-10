@@ -9,7 +9,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import br.com.lucad.kotlinmarmitex.EditProfile
 import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
@@ -168,7 +167,7 @@ class LoginActivity : AppCompatActivity() {
         hideProgressLogin()
 
         if(user?.profileIsComplete == 0){
-            val intent = Intent(this, EditProfile::class.java)
+            val intent = Intent(this, EditProfileActivity::class.java)
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
             startActivity(intent)
         }else{
