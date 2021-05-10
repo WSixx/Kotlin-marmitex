@@ -55,7 +55,12 @@ class SetUser() {
             .update(userHashMap)
 
             .addOnSuccessListener {
-                activity.toast("Sucesso ao atualizar Usuario - Edit")
+
+                when (activity){
+                    is EditProfile -> {
+                       activity.afterSaveNewInformationSuccessful()
+                    }
+                }
             }
 
             .addOnFailureListener {e ->

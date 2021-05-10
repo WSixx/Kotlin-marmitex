@@ -1,5 +1,6 @@
 package br.com.lucad.kotlinmarmitex
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -104,6 +105,16 @@ class EditProfile : AppCompatActivity() {
         }else{
             true
         }
+    }
+
+    fun afterSaveNewInformationSuccessful(){
+        hideProgressEdit()
+        toast("Sucesso ao atualizar Usuario - Edit")
+        buttonSave.isEnabled = true
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     fun hideProgressEdit() {
