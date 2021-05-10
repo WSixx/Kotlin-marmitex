@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
+import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
 
@@ -58,11 +59,11 @@ class EditProfile : AppCompatActivity() {
     }
 
     private fun saveDataButton(){
-        progressEdit.visibility = View.VISIBLE
-        buttonSave.isEnabled = false
+
         buttonSave.setOnClickListener {
             if(checkIfPhoneIsEmpty()){
-                toast("Dados Atualizados")
+                progressEdit.visibility = View.VISIBLE
+                buttonSave.isEnabled = false
                 val userHashMap = HashMap<String, Any>()
                 var phone = editProfilePhone.text.toString().trim()
                 var ddd = editProfileDDD.text.toString().trim()
@@ -77,6 +78,9 @@ class EditProfile : AppCompatActivity() {
                 userHashMap[Constants.UF] = uf
                 userHashMap[Constants.DISCTRICT] = district
                 userHashMap[Constants.STREET] = street
+                //userHashMap["profileIsComplete"] = 1
+
+                SetUser().updateUserInfo(this, userHashMap )
             }
         }
     }
