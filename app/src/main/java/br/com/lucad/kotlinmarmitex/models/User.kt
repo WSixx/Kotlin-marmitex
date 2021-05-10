@@ -18,6 +18,11 @@ data class User(
     var username: String? = null,
     var email: String? = null,
     var phoneNumber: String = "",
+    var phoneDDD: Int = 0,
+    var userCity: String = "",
+    var userUF: String = "",
+    var userDistrict: String = "",
+    var userStreet: String = "",
     var profileIsComplete: Int = 0
 ) : Parcelable {
 }

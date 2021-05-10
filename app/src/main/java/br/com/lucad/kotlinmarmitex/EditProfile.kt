@@ -65,7 +65,6 @@ class EditProfile : AppCompatActivity() {
     }
 
     private fun checkIfPhoneIsEmpty(): Boolean{
-        //TODO: POSSO COLOCAR DDD?
         val phone = editProfilePhone.text
         val city = editProfileCity.text
         val street = editProfileStreet.text
