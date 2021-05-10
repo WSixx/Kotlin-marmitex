@@ -3,6 +3,8 @@ package br.com.lucad.kotlinmarmitex
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.Toast
+import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
 
@@ -28,4 +30,20 @@ class EditProfile : AppCompatActivity() {
         editProfileEmail.setText(user?.email)
 
     }
+
+    private fun saveDataButton(){
+
+    }
+
+    private fun checkIfPhoneIsEmpty(): Boolean{
+        //TODO: POSSO COLOCAR DDD?
+        val phone = editProfilePhone.text
+        return if(phone.isNullOrEmpty() || phone.isNullOrBlank() || phone.length < 9){
+            toast("Digite um telefone válido")
+            false
+        }else{
+            true
+        }
+    }
+
 }
