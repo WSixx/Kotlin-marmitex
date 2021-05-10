@@ -1,4 +1,4 @@
-package br.com.lucad.kotlinmarmitex.views
+package br.com.lucad.kotlinmarmitex.views.ui.views
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.models.SetUser
@@ -171,7 +170,7 @@ class LoginActivity : AppCompatActivity() {
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
             startActivity(intent)
         }else{
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
         }
         finish()

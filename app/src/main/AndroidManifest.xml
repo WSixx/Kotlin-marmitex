@@ -13,12 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMarmitex"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.EditProfileActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".views.ui.views.DashboardActivity"
+            android:label="Marmitex"></activity>
+        <activity
+            android:name=".views.ui.views.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".views.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".views.ui.views.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
