@@ -10,4 +10,9 @@ object Constants {
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
 
     const val PHONE: String = "phone"
+    const val DDD: String = "ddd"
+    const val CITY: String = "city"
+    const val UF: String = "uf"
+    const val STREET: String = "street"
+    const val DISCTRICT: String = "district"
 }

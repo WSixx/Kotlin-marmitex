@@ -2,8 +2,10 @@ package br.com.lucad.kotlinmarmitex
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
@@ -19,6 +21,7 @@ class EditProfile : AppCompatActivity() {
     private lateinit var editProfileDistrict: EditText
     private lateinit var editProfileStreet: EditText
     lateinit var buttonSave: Button
+    lateinit var progressEdit: ProgressBar
 
     lateinit var user: User
 
@@ -35,6 +38,8 @@ class EditProfile : AppCompatActivity() {
         editProfileUF = findViewById(R.id.editText_edit_estado)
         editProfileDistrict = findViewById(R.id.editText_edit_bairro)
         editProfileStreet = findViewById(R.id.editText_edit_rua)
+
+        progressEdit = findViewById(R.id.progressBar_edit)
 
         buttonSave = findViewById(R.id.button_save_edit)
 
@@ -53,13 +58,25 @@ class EditProfile : AppCompatActivity() {
     }
 
     private fun saveDataButton(){
+        progressEdit.visibility = View.VISIBLE
+        buttonSave.isEnabled = false
         buttonSave.setOnClickListener {
             if(checkIfPhoneIsEmpty()){
                 toast("Dados Atualizados")
                 val userHashMap = HashMap<String, Any>()
                 var phone = editProfilePhone.text.toString().trim()
+                var ddd = editProfileDDD.text.toString().trim()
+                var city = editProfileCity.text.toString().trim()
+                var uf = editProfileUF.text.toString().trim()
+                var street = editProfileStreet.text.toString().trim()
+                var district = editProfileDistrict.text.toString().trim()
 
                 userHashMap[Constants.PHONE] = phone
+                userHashMap[Constants.DDD] = ddd
+                userHashMap[Constants.CITY] = city
+                userHashMap[Constants.UF] = uf
+                userHashMap[Constants.DISCTRICT] = district
+                userHashMap[Constants.STREET] = street
             }
         }
     }
@@ -83,6 +100,10 @@ class EditProfile : AppCompatActivity() {
         }else{
             true
         }
+    }
+
+    fun hideProgressEdit() {
+        progressEdit.visibility = View.GONE
     }
 
 }

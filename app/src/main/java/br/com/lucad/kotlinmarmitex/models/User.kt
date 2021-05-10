@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Parcelable
+import android.util.Log
+import br.com.lucad.kotlinmarmitex.EditProfile
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
@@ -43,6 +45,31 @@ class SetUser() {
             .addOnFailureListener {
                 activity.toast("Error ao cadastrar Usuario - Register")
             }
+    }
+
+    //https://firebase.google.com/docs/firestore/manage-data/add-data
+    fun updateUserInfo(activity: Activity, userHashMap: HashMap<String, Any>){
+
+        FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .update(userHashMap)
+
+            .addOnSuccessListener {
+                activity.toast("Sucesso ao atualizar Usuario - Edit")
+            }
+
+            .addOnFailureListener {e ->
+
+                when (activity){
+                    is EditProfile -> {
+                        activity.hideProgressEdit()
+                        activity.buttonSave.isEnabled = true
+                    }
+                }
+                Log.d("Error Update User: ", e.printStackTrace().toString())
+                activity.toast("Error ao atualizar Usuario - Edit")
+            }
+
     }
 
     private fun getCurrentUserId(): String {

@@ -35,6 +35,13 @@
             android:layout_margin="25dp"
             android:src="@drawable/user_profile_pic" />
 
+        <ProgressBar
+            android:id="@+id/progressBar_edit"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
