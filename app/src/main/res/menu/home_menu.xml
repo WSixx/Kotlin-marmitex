@@ -8,4 +8,6 @@
         android:title="Settings"
         app:showAsAction="always"/>
 
+    <!-- TODO: ADD UM ITEM DO MENU PARA O USER DAR SIGN OUT -->
+
 </menu>

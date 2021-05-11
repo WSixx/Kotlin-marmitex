@@ -16,4 +16,6 @@ object Constants {
     const val UF: String = "uf"
     const val STREET: String = "street"
     const val DISTRICT: String = "district"
+
+    //TODO: ADICIONAR OUTROS TEXTOS AQUI QUE SE REPETEM
 }

@@ -46,6 +46,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        //TODO: CARREGAR OS VIEWS EM UM METODO -- CLICKS TBM
+
         buttonSignIn = findViewById(R.id.button_signin)
         buttonSignUp = findViewById(R.id.button_signup)
 
@@ -189,7 +191,7 @@ class LoginActivity : AppCompatActivity() {
         progressLogin.visibility = View.GONE
     }
 
-    fun showProgressLogin() {
+    private fun showProgressLogin() {
         progressLogin.visibility = View.VISIBLE
     }
 

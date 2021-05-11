@@ -26,9 +26,10 @@ data class User(
     var userDistrict: String = "",
     var userStreet: String = "",
     var profileIsComplete: Int = 0
-) : Parcelable {
-}
+) : Parcelable
 
+//TODO: POSSO ADD UMA IMAGEM PERFIL DEPOIS ?TALVEZ?
+// TEREI QUE USAR GLIDE E SALVA ESSA IMAGEM NO DB DO FIREBASE MESMO
 
 class SetUser() {
     fun writeNewUser(user: User) {

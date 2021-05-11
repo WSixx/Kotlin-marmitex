@@ -10,6 +10,11 @@ import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 
+//TODO: FAZER UMA SPLASH SCREEN
+
+//TODO: SE TIVER TEMPO E PACIÊNCIA...ADD UM BOT CHAT COM IA DO GOOGLE CLOUD
+// OLHAR O EXEMPLO QUE FIZ EM FLUTTER
+
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences:SharedPreferences
     lateinit var username: String
