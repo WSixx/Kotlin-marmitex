@@ -1,4 +1,4 @@
-package br.com.lucad.kotlinmarmitex.views.ui.views
+package br.com.lucad.kotlinmarmitex.ui.views
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,7 @@ import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
+import br.com.lucad.kotlinmarmitex.ui.views.HomeActivity
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
 import io.github.cdimascio.dotenv.dotenv
@@ -170,7 +171,7 @@ class LoginActivity : AppCompatActivity() {
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
             startActivity(intent)
         }else{
-            val intent = Intent(this, DashboardActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
         finish()

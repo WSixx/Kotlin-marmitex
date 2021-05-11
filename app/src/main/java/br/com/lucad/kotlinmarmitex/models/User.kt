@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Parcelable
 import android.util.Log
-import br.com.lucad.kotlinmarmitex.views.ui.views.EditProfileActivity
+import br.com.lucad.kotlinmarmitex.ui.views.EditProfileActivity
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
-import br.com.lucad.kotlinmarmitex.views.ui.views.LoginActivity
+import br.com.lucad.kotlinmarmitex.ui.views.LoginActivity
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.SetOptions
 import kotlinx.parcelize.Parcelize

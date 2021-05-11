@@ -1,4 +1,4 @@
-package br.com.lucad.kotlinmarmitex.views.ui.views
+package br.com.lucad.kotlinmarmitex.ui.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
