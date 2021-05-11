@@ -15,6 +15,9 @@ import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 //TODO: SE TIVER TEMPO E PACIÊNCIA...ADD UM BOT CHAT COM IA DO GOOGLE CLOUD
 // OLHAR O EXEMPLO QUE FIZ EM FLUTTER
 
+//TODO: NO FINAL ESTUDAR O ANDROID MVVM -> SE POSSIVEL COLOCAR AQUI
+//TODO: NO FINAL AJEITAR PARA Clean Architecture
+
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences:SharedPreferences
     lateinit var username: String
