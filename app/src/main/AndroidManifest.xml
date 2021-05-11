@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMarmitex"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.views.SettingsActivity" />
+        <activity android:name=".ui.views.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".ui.views.HomeActivity"
             android:label="Marmitex"
