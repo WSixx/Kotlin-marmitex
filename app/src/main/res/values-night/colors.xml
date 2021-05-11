@@ -9,9 +9,5 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red_300">#FF7D73</color>
-    <color name="red_500">#f44336</color>
-    <color name="red_600">#E53935</color>
-    <color name="red_800">#c62828</color>
-    <color name="gray">#E6E6E6</color>
+    <color name="red">#C52013</color>
 </resources>

@@ -1,13 +1,15 @@
-package br.com.lucad.kotlinmarmitex
+package br.com.lucad.kotlinmarmitex.ui.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import br.com.lucad.kotlinmarmitex.R
 
-class LoginActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         //Main
         //teste 2 3
+        setContentView(R.layout.activity_settings)
     }
 }
