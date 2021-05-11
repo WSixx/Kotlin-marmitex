@@ -7,9 +7,7 @@ import br.com.lucad.kotlinmarmitex.R
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        //Main
-        //teste 2 3
         setContentView(R.layout.activity_settings)
+
     }
 }

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.KotlinMarmitex" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/red_500</item>
-        <item name="colorPrimaryVariant">@color/red_800</item>
+        <item name="colorPrimary">@color/azul_primary</item>
+        <item name="colorPrimaryVariant">@color/red_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/red_300</item>
