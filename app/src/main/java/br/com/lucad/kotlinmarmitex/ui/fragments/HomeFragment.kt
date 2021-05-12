@@ -5,13 +5,26 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.models.Meal
+import br.com.lucad.kotlinmarmitex.models.Meals
+import br.com.lucad.kotlinmarmitex.models.MealsAdapter
+import br.com.lucad.kotlinmarmitex.models.MealsViewHolder
 import br.com.lucad.kotlinmarmitex.ui.views.SettingsActivity
+import br.com.lucad.kotlinmarmitex.utils.Constants
+import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 
 
 class HomeFragment : Fragment() {
 
-    // private lateinit var dashboardViewModel: DashboardViewModel
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+    private lateinit var myRecycle: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,14 +36,22 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
 
-        val textView: TextView = root.findViewById(R.id.text_home)
-        textView.text = "Home"
 
-        return root
+    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
+        myRecycle = requireView().findViewById(R.id.recycle_meals)
+        super.onViewCreated(itemView, savedInstanceState)
+        val query: Query = FirebaseUtils.firebaseFirestore.collection(Constants.MEALS)
+        val options = FirestoreRecyclerOptions.Builder<Meal>().setQuery(query, Meal::class.java)
+            .setLifecycleOwner(this).build()
+
+        val adapter = MealsAdapter(options)
+
+        myRecycle.adapter = adapter
+        myRecycle.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -26,7 +26,8 @@ data class User(
     var userUF: String = "",
     var userDistrict: String = "",
     var userStreet: String = "",
-    var profileIsComplete: Int = 0
+    var profileIsComplete: Int = 0,
+    var userOrders: List<Order>? = null
 ) : Parcelable
 
 //TODO: POSSO ADD UMA IMAGEM PERFIL DEPOIS ?TALVEZ?
