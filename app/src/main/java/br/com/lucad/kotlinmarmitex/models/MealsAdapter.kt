@@ -5,22 +5,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
 import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import java.lang.ref.WeakReference
 
 
-class MealsAdapter(options: FirestoreRecyclerOptions<Meal>) :
+class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener: ClickListener) :
     FirestoreRecyclerAdapter<Meal, MealsViewHolder>(options) {
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): MealsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.meals_adapter_item, parent, false)
-        return MealsViewHolder(view)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.meals_adapter_item, parent, false)
+        return MealsViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(
@@ -29,7 +34,8 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>) :
         model: Meal
     ) {
         val textViewMealTitle: TextView = holder.itemView.findViewById(R.id.text_view_adapter_title)
-        val textviewMealDescription: TextView = holder.itemView.findViewById(R.id.text_view_adapter_description)
+        val textviewMealDescription: TextView =
+            holder.itemView.findViewById(R.id.text_view_adapter_description)
         val imageViewMeal: ImageView = holder.itemView.findViewById(R.id.image_view_adapter_meal)
 
         textViewMealTitle.text = model.title
@@ -37,7 +43,7 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>) :
         model.images?.get(0)?.let { getImageFromFirebase(holder.itemView, imageViewMeal, it) }
     }
 
-    private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String){
+    private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {
         Glide.with(itemView)
             .load(url)
             .centerCrop() //4
@@ -49,9 +55,36 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>) :
 }
 
 
-class MealsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+class MealsViewHolder(itemView: View, var listener: ClickListener) :
+    RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-    private var textViewMealTitle: TextView = itemView.findViewById(R.id.text_view_adapter_title)
-    private var textviewMealDescription: TextView = itemView.findViewById(R.id.text_view_adapter_description)
+
+    private var listenerRef: WeakReference<ClickListener> = WeakReference(listener)
+    private var imageViewLike: ImageView = itemView.findViewById(R.id.image_view_item_like)
+    private var imageViewDeslike: ImageView = itemView.findViewById(R.id.image_view_item_deslike)
+
+    init {
+        imageViewLike = itemView.findViewById(R.id.image_view_item_like)
+        imageViewDeslike = itemView.findViewById(R.id.image_view_item_deslike)
+
+        itemView.setOnClickListener(this)
+        imageViewLike.setOnClickListener(this)
+        imageViewDeslike.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        println("Fragment click")
+
+        if (v!!.id == imageViewLike.id) {
+            Toast.makeText(v!!.context, "Like PRESSED = $adapterPosition", Toast.LENGTH_SHORT)
+                .show();
+        } else if (v!!.id == imageViewDeslike.id) {
+            Toast.makeText(v!!.context, "Deslike PRESSED = $adapterPosition", Toast.LENGTH_SHORT)
+                .show();
+
+        }
+        listenerRef?.get()?.onPositionClicked(adapterPosition)
+    }
+
 }
 
