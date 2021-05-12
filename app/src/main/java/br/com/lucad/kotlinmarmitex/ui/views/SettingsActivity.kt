@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
@@ -21,7 +22,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var buttonSettingEdit: Button
     private lateinit var buttonSettingLogout: Button
     private lateinit var textViewUsername: TextView
-    private lateinit var textViewCity: TextView
+    private lateinit var textViewEmail: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,7 @@ class SettingsActivity : AppCompatActivity() {
         buttonSettingEdit = findViewById(R.id.button_settings_editar)
         buttonSettingLogout = findViewById(R.id.button_settings_logout)
         textViewUsername = findViewById(R.id.text_view_settings_username)
-        textViewCity = findViewById(R.id.text_view_settings_city)
+        textViewEmail = findViewById(R.id.text_view_settings_email)
         dataLoading()
         getUserDetails()
 
@@ -41,7 +42,15 @@ class SettingsActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-
+        buttonSettingLogout.setOnClickListener {
+            FirebaseUtils.firebaseAuth.signOut()
+            try{
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }finally {
+                finishAffinity()
+            }
+        }
     }
 
     override fun onResume() {
@@ -69,7 +78,7 @@ class SettingsActivity : AppCompatActivity() {
         buttonSettingLogout.isEnabled = true
 
         textViewUsername.text = user.username
-        textViewCity.text = user.userCity
+        textViewEmail.text = user.userCity
 
         buttonSettingEdit.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)

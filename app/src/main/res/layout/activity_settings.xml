@@ -60,14 +60,13 @@
         app:layout_constraintTop_toBottomOf="@id/linearLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/text_view_settings_city"/>
+        app:layout_constraintBottom_toTopOf="@id/text_view_settings_email"/>
 
     <TextView
-        android:id="@+id/text_view_settings_city"
+        android:id="@+id/text_view_settings_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textSize="14sp"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/text_view_settings_username"
         app:layout_constraintLeft_toLeftOf="parent"
