@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
-import br.com.lucad.kotlinmarmitex.MainActivity
+import androidx.appcompat.widget.Toolbar
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.models.SetUser
@@ -25,9 +25,11 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editProfileDistrict: EditText
     private lateinit var editProfileStreet: EditText
     lateinit var buttonSave: Button
-    lateinit var progressEdit: ProgressBar
+    private lateinit var progressEdit: ProgressBar
+    private lateinit var toolbar: Toolbar
 
-    lateinit var user: User
+
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,13 +53,22 @@ class EditProfileActivity : AppCompatActivity() {
             user = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
         }
 
-
         editProfileNome.isEnabled = false
         editProfileNome.setText(user.username)
         editProfileEmail.isEnabled = false
         editProfileEmail.setText(user.email)
 
+        if (user.userCity.isNotEmpty()) editProfileCity.setText(user.userCity) else ""
+        if (user.userPhone.isNotEmpty()) editProfilePhone.setText(user.userPhone) else ""
+        if (user.userDdd.isNotEmpty()) editProfileDDD.setText(user.userDdd) else ""
+
         saveDataButton()
+
+        createActionToolbar()
+
+        toolbar.setNavigationOnClickListener{
+            onBackPressed()
+        }
 
     }
 
@@ -73,12 +84,12 @@ class EditProfileActivity : AppCompatActivity() {
             val street = editProfileStreet.text.toString().trim()
             val district = editProfileDistrict.text.toString().trim()
 
-            userHashMap[Constants.PHONE] = phone
-            userHashMap[Constants.DDD] = ddd
-            userHashMap[Constants.CITY] = city
-            userHashMap[Constants.UF] = uf
-            userHashMap[Constants.DISTRICT] = district
-            userHashMap[Constants.STREET] = street
+            userHashMap[Constants.USER_PHONE] = phone
+            userHashMap[Constants.USER_DDD] = ddd
+            userHashMap[Constants.USER_CITY] = city
+            userHashMap[Constants.USER_UF] = uf
+            userHashMap[Constants.USER_DISTRICT] = district
+            userHashMap[Constants.USER_STREET] = street
             userHashMap[Constants.PROFILE_IS_COMPLETE] = 1
 
             SetUser().updateUserInfo(this, userHashMap )
@@ -92,6 +103,15 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun createActionToolbar(){
+        toolbar = findViewById(R.id.toolbar_editar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.title = "Editar"
+        actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
+    }
 
 
     private fun checkIfPhoneIsEmpty(): Boolean{
@@ -120,7 +140,7 @@ class EditProfileActivity : AppCompatActivity() {
         toast("Sucesso ao atualizar Usuario - Edit")
         buttonSave.isEnabled = true
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
     }

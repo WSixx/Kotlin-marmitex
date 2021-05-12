@@ -10,6 +10,7 @@ import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import br.com.lucad.kotlinmarmitex.ui.views.LoginActivity
+import br.com.lucad.kotlinmarmitex.ui.views.SettingsActivity
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.SetOptions
 import kotlinx.parcelize.Parcelize
@@ -19,8 +20,8 @@ data class User(
     var id: String? = null,
     var username: String? = null,
     var email: String? = null,
-    var phoneNumber: String = "",
-    var phoneDDD: Int = 0,
+    var userPhone: String = "",
+    var userDdd: String = "",
     var userCity: String = "",
     var userUF: String = "",
     var userDistrict: String = "",
@@ -31,7 +32,7 @@ data class User(
 //TODO: POSSO ADD UMA IMAGEM PERFIL DEPOIS ?TALVEZ?
 // TEREI QUE USAR GLIDE E SALVA ESSA IMAGEM NO DB DO FIREBASE MESMO
 
-class SetUser() {
+class SetUser {
     fun writeNewUser(user: User) {
         FirebaseUtils.firebaseDatabase.child(Constants.USERS).child(user.id!!).setValue(user)
     }
@@ -49,7 +50,7 @@ class SetUser() {
     }
 
     //https://firebase.google.com/docs/firestore/manage-data/add-data
-    fun updateUserInfo(activity: Activity, userHashMap: HashMap<String, Any>){
+    fun updateUserInfo(activity: Activity, userHashMap: HashMap<String, Any>) {
 
         FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
@@ -57,20 +58,21 @@ class SetUser() {
 
             .addOnSuccessListener {
 
-                when (activity){
+                when (activity) {
                     is EditProfileActivity -> {
-                       activity.afterSaveNewInformationSuccessful()
+                        activity.afterSaveNewInformationSuccessful()
                     }
                 }
             }
 
-            .addOnFailureListener {e ->
+            .addOnFailureListener { e ->
 
-                when (activity){
+                when (activity) {
                     is EditProfileActivity -> {
                         activity.hideProgressEdit()
                         activity.buttonSave.isEnabled = true
                     }
+
                 }
                 Log.d("Error Update User: ", e.printStackTrace().toString())
                 activity.toast("Error ao atualizar Usuario - Edit")
@@ -91,7 +93,7 @@ class SetUser() {
     }
 
     //https://firebase.google.com/docs/firestore/query-data/get-data#kotlin+ktx_2
-    fun getUserInfo(activity: Activity){
+    fun getUserInfo(activity: Activity) {
         println("GET: " + getCurrentUserId())
         FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
@@ -101,22 +103,33 @@ class SetUser() {
 
                 saveToMySharedPreferences(activity, user?.username)
 
-                when(activity){
+                when (activity) {
                     is LoginActivity -> {
                         activity.userIsLogged(user)
                     }
+
+                    is SettingsActivity -> {
+                        if (user != null) {
+                            activity.dataIsLoaded(user)
+                        }
+                    }
                 }
             }
-            .addOnFailureListener{
-                when(activity){
+            .addOnFailureListener {
+                when (activity) {
                     is LoginActivity -> {
                         activity.hideProgressLogin()
                     }
+
+                    is SettingsActivity -> {
+                        activity.hideProgressBar()
+                    }
+
                 }
             }
     }
 
-    private fun saveToMySharedPreferences(activity: Activity, userName: String?){
+    private fun saveToMySharedPreferences(activity: Activity, userName: String?) {
         val sharedPreferences = activity.getSharedPreferences(
             Constants.MY_SHARE_PREF,
             Context.MODE_PRIVATE

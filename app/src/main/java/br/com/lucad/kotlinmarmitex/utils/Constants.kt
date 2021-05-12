@@ -10,12 +10,12 @@ object Constants {
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
 
     const val PROFILE_IS_COMPLETE: String = "profileIsComplete"
-    const val PHONE: String = "phone"
-    const val DDD: String = "ddd"
-    const val CITY: String = "city"
-    const val UF: String = "uf"
-    const val STREET: String = "street"
-    const val DISTRICT: String = "district"
+    const val USER_PHONE: String = "userPhone"
+    const val USER_DDD: String = "userDdd"
+    const val USER_CITY: String = "userCity"
+    const val USER_UF: String = "userUf"
+    const val USER_STREET: String = "userStreet"
+    const val USER_DISTRICT: String = "userDistrict"
 
     //TODO: ADICIONAR OUTROS TEXTOS AQUI QUE SE REPETEM
 }
