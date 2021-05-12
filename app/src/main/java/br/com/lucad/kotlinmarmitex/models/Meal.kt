@@ -18,7 +18,7 @@ data class Meal(
     val title: String? = null,
     val description: String? = null,
     val price: Double = 0.0,
-    val imageUrl: String? = null
+    val images: List<String>? = null
 ) : Parcelable {
 
 }

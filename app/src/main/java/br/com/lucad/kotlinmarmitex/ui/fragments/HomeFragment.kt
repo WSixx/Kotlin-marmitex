@@ -22,8 +22,6 @@ import com.google.firebase.firestore.Query
 
 class HomeFragment : Fragment() {
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
     private lateinit var myRecycle: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
