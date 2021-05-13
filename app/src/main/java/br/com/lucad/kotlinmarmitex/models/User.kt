@@ -34,7 +34,6 @@ data class User(
 ) : Parcelable
 
 //TODO: POSSO ADD UMA IMAGEM PERFIL DEPOIS ?TALVEZ?
-// TEREI QUE USAR GLIDE E SALVA ESSA IMAGEM NO DB DO FIREBASE MESMO
 
 class SetUser {
     fun writeNewUser(user: User) {
@@ -49,17 +48,19 @@ class SetUser {
                 activity.hideProgressLogin()
             }
             .addOnFailureListener {
-                activity.errorSnackBar("Error ao salvar user", activity.findViewById(R.id.activity_login),  activity.findViewById(R.id.activity_login))
+                activity.errorSnackBar(
+                    "Error ao salvar user",
+                    activity.findViewById(R.id.activity_login),
+                    activity.findViewById(R.id.text_view_login)
+                )
             }
     }
 
     //https://firebase.google.com/docs/firestore/manage-data/add-data
     fun updateUserInfo(activity: Activity, userHashMap: HashMap<String, Any>) {
-
         FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .update(userHashMap)
-
             .addOnSuccessListener {
 
                 when (activity) {
@@ -79,7 +80,19 @@ class SetUser {
 
                 }
                 Log.d("Error Update User: ", e.printStackTrace().toString())
-                activity.errorSnackBar("Error ao atualizar Usuario - Edit", activity.findViewById(R.id.activity_login),  activity.findViewById(R.id.activity_login))
+                activity.errorSnackBar(
+                    "Error ao atualizar Usuario - Edit",
+                    activity.findViewById(R.id.activity_login),
+                    activity.findViewById(R.id.activity_login)
+                )
+            }
+    }
+
+    fun updateUserOrders(ordersHashMap: ArrayList<HashMap<String, Any>>) {
+        FirebaseUtils.firebaseFirestore.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .update("orders", ordersHashMap)
+            .addOnSuccessListener {
             }
     }
 

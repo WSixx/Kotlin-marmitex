@@ -1,14 +1,19 @@
 package br.com.lucad.kotlinmarmitex.models
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.ui.views.PaymentActivity
+import br.com.lucad.kotlinmarmitex.utils.Constants
 import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -37,6 +42,14 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener
         val textviewMealDescription: TextView =
             holder.itemView.findViewById(R.id.text_view_adapter_description)
         val imageViewMeal: ImageView = holder.itemView.findViewById(R.id.image_view_adapter_meal)
+        val buttonOrder: Button = holder.itemView.findViewById(R.id.button_item_order_meal)
+
+        buttonOrder.setOnClickListener {
+            Toast.makeText(it.context, "Pedir = ${model.title}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(it.context, PaymentActivity::class.java)
+            intent.putExtra(Constants.MEALS_MODEL, model)
+            it.context?.startActivity(intent)
+        }
 
         textViewMealTitle.text = model.title
         textviewMealDescription.text = model.description
@@ -55,35 +68,42 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener
 }
 
 
-class MealsViewHolder(itemView: View, private var listener: ClickListener) :
+class MealsViewHolder(itemView: View, listener: ClickListener) :
     RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
 
     private var listenerRef: WeakReference<ClickListener> = WeakReference(listener)
     private var imageViewLike: ImageView = itemView.findViewById(R.id.image_view_item_like)
     private var imageViewDeslike: ImageView = itemView.findViewById(R.id.image_view_item_deslike)
+    private var buttonOrder: Button = itemView.findViewById(R.id.button_item_order_meal)
 
     init {
         imageViewLike = itemView.findViewById(R.id.image_view_item_like)
         imageViewDeslike = itemView.findViewById(R.id.image_view_item_deslike)
+        buttonOrder = itemView.findViewById(R.id.button_item_order_meal)
 
         itemView.setOnClickListener(this)
         imageViewLike.setOnClickListener(this)
         imageViewDeslike.setOnClickListener(this)
+        buttonOrder.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         println("Fragment click")
 
-        if (v!!.id == imageViewLike.id) {
-            Toast.makeText(v!!.context, "Like PRESSED = $adapterPosition", Toast.LENGTH_SHORT)
-                .show();
-        } else if (v!!.id == imageViewDeslike.id) {
-            Toast.makeText(v!!.context, "Deslike PRESSED = $adapterPosition", Toast.LENGTH_SHORT)
-                .show();
+        when (v!!.id) {
+            imageViewLike.id -> {
+                Toast.makeText(v.context, "Like PRESSED = $adapterPosition", Toast.LENGTH_SHORT).show()
+            }
+            imageViewDeslike.id -> {
+                Toast.makeText(v.context, "Deslike PRESSED = $adapterPosition", Toast.LENGTH_SHORT).show()
 
+            }
+            buttonOrder.id -> {
+                Toast.makeText(v.context, "Pedir = $adapterPosition", Toast.LENGTH_SHORT).show()
+            }
         }
-        listenerRef?.get()?.onPositionClicked(adapterPosition)
+        listenerRef.get()?.onPositionClicked(adapterPosition)
     }
 
 }

@@ -3,6 +3,8 @@ package br.com.lucad.kotlinmarmitex.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Adapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +12,7 @@ import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.models.Meal
 import br.com.lucad.kotlinmarmitex.models.MealsAdapter
+import br.com.lucad.kotlinmarmitex.ui.views.PaymentActivity
 import br.com.lucad.kotlinmarmitex.ui.views.SettingsActivity
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
@@ -20,6 +23,7 @@ import com.google.firebase.firestore.Query
 class HomeFragment : Fragment() {
 
     private lateinit var myRecycle: RecyclerView
+    lateinit var adapter: MealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,21 +39,28 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
+    }
+
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         myRecycle = requireView().findViewById(R.id.recycle_meals)
-
-
         super.onViewCreated(itemView, savedInstanceState)
-        val query: Query = FirebaseUtils.firebaseFirestore.collection(Constants.MEALS).orderBy("votos", Query.Direction.DESCENDING)
-        val options = FirestoreRecyclerOptions.Builder<Meal>().setQuery(query, Meal::class.java)
-            .setLifecycleOwner(this).build()
 
-        val adapter = MealsAdapter(options, object : ClickListener {
+        val query: Query = FirebaseUtils.firebaseFirestore.collection(Constants.MEALS).orderBy(Constants.USER_VOTOS, Query.Direction.DESCENDING)
+        val options = FirestoreRecyclerOptions.Builder<Meal>().setQuery(query, Meal::class.java).setLifecycleOwner(this).build()
+
+         adapter = MealsAdapter(options, object : ClickListener {
             override fun onPositionClicked(position: Int) {
-                println("Fragment click")
-            }
 
+            }
             override fun onLongClicked(position: Int) {
                 // callback performed on click
             }
