@@ -9,7 +9,8 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import br.com.lucad.kotlinmarmitex.R
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
+import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
+import br.com.lucad.kotlinmarmitex.extensions.Extensions.sucessSnackBar
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
@@ -128,7 +129,7 @@ class EditProfileActivity : AppCompatActivity() {
             || ddd.isEmpty() || ddd.isBlank()
             || district.isEmpty() || district.isBlank() || district.length < 4
         ){
-            toast("Digite um Dados Válidos")
+            errorSnackBar("Digite um Dados Válidos", findViewById(R.id.activity_edit),  findViewById(R.id.button_save_edit))
             false
         }else{
             true
@@ -137,7 +138,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     fun afterSaveNewInformationSuccessful(){
         hideProgressEdit()
-        toast("Sucesso ao atualizar Usuario - Edit")
+        sucessSnackBar("Sucesso ao atualizar Usuario - Edit", findViewById(R.id.activity_edit),  findViewById(R.id.button_save_edit))
         buttonSave.isEnabled = true
 
         val intent = Intent(this, HomeActivity::class.java)

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".views.ui.views.LoginActivity">
+    android:id="@+id/activity_login"
+    tools:context=".ui.views.LoginActivity">
 
 
     <ProgressBar

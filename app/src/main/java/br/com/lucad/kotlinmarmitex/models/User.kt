@@ -5,8 +5,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Parcelable
 import android.util.Log
+import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
 import br.com.lucad.kotlinmarmitex.ui.views.EditProfileActivity
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import br.com.lucad.kotlinmarmitex.ui.views.LoginActivity
@@ -48,7 +49,7 @@ class SetUser {
                 activity.hideProgressLogin()
             }
             .addOnFailureListener {
-                activity.toast("Error ao salvar user")
+                activity.errorSnackBar("Error ao salvar user", activity.findViewById(R.id.activity_login),  activity.findViewById(R.id.activity_login))
             }
     }
 
@@ -78,7 +79,7 @@ class SetUser {
 
                 }
                 Log.d("Error Update User: ", e.printStackTrace().toString())
-                activity.toast("Error ao atualizar Usuario - Edit")
+                activity.errorSnackBar("Error ao atualizar Usuario - Edit", activity.findViewById(R.id.activity_login),  activity.findViewById(R.id.activity_login))
             }
     }
 

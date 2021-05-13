@@ -1,5 +1,6 @@
 package br.com.lucad.kotlinmarmitex.ui.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -11,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.exceptions.AuthExceptions
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
+import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
+import br.com.lucad.kotlinmarmitex.extensions.Extensions.sucessSnackBar
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
-import br.com.lucad.kotlinmarmitex.ui.views.HomeActivity
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
 import io.github.cdimascio.dotenv.dotenv
@@ -28,6 +29,7 @@ val dotenv = dotenv {
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var activityLogin: View
     private lateinit var editEmail: EditText
     private lateinit var editPassword: EditText
     private lateinit var editNomeUser: EditText
@@ -48,6 +50,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         //TODO: CARREGAR OS VIEWS EM UM METODO -- CLICKS TBM
+
+        activityLogin = findViewById(R.id.activity_login)
 
         buttonSignIn = findViewById(R.id.button_signin)
         buttonSignUp = findViewById(R.id.button_signup)
@@ -119,7 +123,7 @@ class LoginActivity : AppCompatActivity() {
                     if (signIn.isSuccessful) {
                         SetUser().getUserInfo(this@LoginActivity)
                     } else {
-                        toast("Error ao Logar")
+                        errorSnackBar("Error ao logar", activityLogin, activityLogin )
                         hideProgressLogin()
                     }
                 }
@@ -158,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 .addOnFailureListener {exception ->
-                    toast(AuthExceptions().handleException(exception))
+                    errorSnackBar(AuthExceptions().handleException(exception), activityLogin, editPassword)
                     hideProgressLogin()
                 }
 
@@ -183,11 +187,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun userRegisterSuccessful() {
-        toast("Conta criada com sucesso")
+        sucessSnackBar("Conta criada com sucesso", activityLogin, activityLogin)
     }
 
     private fun userBlankFields() {
-        toast(Constants.BLANK_FIELD)
+        errorSnackBar(Constants.BLANK_FIELD, activityLogin, activityLogin )
     }
 
     fun hideProgressLogin() {

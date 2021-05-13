@@ -6,7 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
+import br.com.lucad.kotlinmarmitex.extensions.Extensions
+import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
 
         title = username
-        toast("Logado com Sucesso + $username")
         textView.text = username
 
         buttonMain.setOnClickListener {

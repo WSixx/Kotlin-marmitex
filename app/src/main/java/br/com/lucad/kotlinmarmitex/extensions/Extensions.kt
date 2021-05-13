@@ -1,15 +1,30 @@
 package br.com.lucad.kotlinmarmitex.extensions
 
 import android.app.Activity
-import android.widget.Toast
+import android.view.View
+import androidx.core.content.ContextCompat
+import br.com.lucad.kotlinmarmitex.R
+import com.google.android.material.snackbar.Snackbar
+
 
 object Extensions {
 
-    //TODO: MUDAR PARA SNACK BAR ?TALVEZ?
-    // COLOCAR UMA PARA ERROR - VERMELHO
-    // OUTRA PARA SUCCESSFUL - AZUL OU VERDE
 
-    fun Activity.toast(msg: String){
+   /* fun Activity.toast(msg: String){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }*/
+
+    fun Activity.sucessSnackBar(msg: String, view: View, anchorView: View){
+        val mySnack = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
+        mySnack.anchorView = anchorView
+        mySnack.setBackgroundTint(ContextCompat.getColor(this, R.color.green))
+        mySnack.show()
+    }
+
+    fun Activity.errorSnackBar(msg: String, view:  View, anchorView: View){
+        val mySnack = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
+        mySnack.anchorView = anchorView
+        mySnack.setBackgroundTint(ContextCompat.getColor(this, R.color.red_400))
+        mySnack.show()
     }
 }
