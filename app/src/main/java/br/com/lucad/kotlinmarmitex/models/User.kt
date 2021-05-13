@@ -11,6 +11,8 @@ import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import br.com.lucad.kotlinmarmitex.ui.views.LoginActivity
 import br.com.lucad.kotlinmarmitex.ui.views.SettingsActivity
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.SetOptions
 import kotlinx.parcelize.Parcelize
@@ -46,7 +48,7 @@ class SetUser {
                 activity.hideProgressLogin()
             }
             .addOnFailureListener {
-                activity.toast("Error ao cadastrar Usuario - Register")
+                activity.toast("Error ao salvar user")
             }
     }
 
@@ -78,10 +80,10 @@ class SetUser {
                 Log.d("Error Update User: ", e.printStackTrace().toString())
                 activity.toast("Error ao atualizar Usuario - Edit")
             }
-
     }
 
-    private fun getCurrentUserId(): String {
+
+    fun getCurrentUserId(): String {
         val currentUser = FirebaseUtils.firebaseUser
 
         var currentUserId = ""
@@ -144,4 +146,6 @@ class SetUser {
         )
         editor.apply()
     }
+
 }
+

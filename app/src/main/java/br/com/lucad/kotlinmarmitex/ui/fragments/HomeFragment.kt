@@ -22,8 +22,6 @@ import com.google.firebase.firestore.Query
 class HomeFragment : Fragment() {
 
     private lateinit var myRecycle: RecyclerView
-    private lateinit var imageViewLike: ImageView
-    private lateinit var imageViewDeslike: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +76,6 @@ class HomeFragment : Fragment() {
                 return true
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 

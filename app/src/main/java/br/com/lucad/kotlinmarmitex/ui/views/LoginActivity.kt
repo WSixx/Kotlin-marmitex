@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.exceptions.AuthExceptions
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.toast
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
@@ -153,12 +154,14 @@ class LoginActivity : AppCompatActivity() {
                         setUser.writeNewUser(user)
                         userIsLogged(user)
                         finish()
-                    } else {
-                        //TODO: FAZER EXCEPTIONS
-                        toast("Error ao criar usuario")
-                        hideProgressLogin()
                     }
                 }
+
+                .addOnFailureListener {exception ->
+                    toast(AuthExceptions().handleException(exception))
+                    hideProgressLogin()
+                }
+
         } else {
             userBlankFields()
             hideProgressLogin()
