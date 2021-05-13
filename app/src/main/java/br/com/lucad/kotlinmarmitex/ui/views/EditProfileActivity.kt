@@ -17,8 +17,8 @@ import br.com.lucad.kotlinmarmitex.utils.Constants
 
 class EditProfileActivity : AppCompatActivity() {
 
-    lateinit var editProfileNome: EditText
-    lateinit var editProfileEmail: EditText
+    private lateinit var editProfileNome: EditText
+    private lateinit var editProfileEmail: EditText
     private lateinit var editProfilePhone: EditText
     private lateinit var editProfileDDD: EditText
     private lateinit var editProfileCity: EditText
@@ -62,6 +62,9 @@ class EditProfileActivity : AppCompatActivity() {
         if (user.userCity.isNotEmpty()) editProfileCity.setText(user.userCity) else ""
         if (user.userPhone.isNotEmpty()) editProfilePhone.setText(user.userPhone) else ""
         if (user.userDdd.isNotEmpty()) editProfileDDD.setText(user.userDdd) else ""
+        if (user.userDistrict.isNotEmpty()) editProfileDistrict.setText(user.userDistrict) else ""
+        if (user.userUF.isNotEmpty()) editProfileUF.setText(user.userUF) else ""
+        if (user.userStreet.isNotEmpty()) editProfileStreet.setText(user.userStreet) else ""
 
         saveDataButton()
 

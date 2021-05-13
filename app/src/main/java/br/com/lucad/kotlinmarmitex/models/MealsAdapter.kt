@@ -55,7 +55,7 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener
 }
 
 
-class MealsViewHolder(itemView: View, var listener: ClickListener) :
+class MealsViewHolder(itemView: View, private var listener: ClickListener) :
     RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
 
