@@ -13,8 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMarmitex"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.views.PaymentActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".ui.views.CartActivity"></activity>
+        <activity
+            android:name=".ui.views.PaymentActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".models.MealsAdapter" />
         <activity
             android:name=".ui.views.SettingsActivity"

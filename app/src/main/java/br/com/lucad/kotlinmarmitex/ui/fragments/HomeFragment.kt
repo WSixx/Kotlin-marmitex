@@ -3,16 +3,14 @@ package br.com.lucad.kotlinmarmitex.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.Adapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.adapter.MealsAdapter
 import br.com.lucad.kotlinmarmitex.models.Meal
-import br.com.lucad.kotlinmarmitex.models.MealsAdapter
-import br.com.lucad.kotlinmarmitex.ui.views.PaymentActivity
+import br.com.lucad.kotlinmarmitex.ui.views.CartActivity
 import br.com.lucad.kotlinmarmitex.ui.views.SettingsActivity
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
@@ -23,7 +21,7 @@ import com.google.firebase.firestore.Query
 class HomeFragment : Fragment() {
 
     private lateinit var myRecycle: RecyclerView
-    lateinit var adapter: MealsAdapter
+    private lateinit var adapter: MealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +79,11 @@ class HomeFragment : Fragment() {
         when (item.itemId){
             R.id.action_settings -> {
                 val intent = Intent(activity, SettingsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.action_cart -> {
+                val intent = Intent(activity, CartActivity::class.java)
                 startActivity(intent)
                 return true
             }

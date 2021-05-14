@@ -1,6 +1,5 @@
-package br.com.lucad.kotlinmarmitex.models
+package br.com.lucad.kotlinmarmitex.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
-import br.com.lucad.kotlinmarmitex.ui.views.PaymentActivity
-import br.com.lucad.kotlinmarmitex.utils.Constants
+import br.com.lucad.kotlinmarmitex.models.Order
 import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

@@ -1,4 +1,4 @@
-package br.com.lucad.kotlinmarmitex.models
+package br.com.lucad.kotlinmarmitex.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.models.Meal
 import br.com.lucad.kotlinmarmitex.ui.views.PaymentActivity
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import com.bumptech.glide.Glide
