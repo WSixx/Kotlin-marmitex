@@ -1,6 +1,5 @@
 package br.com.lucad.kotlinmarmitex.models
 
-import android.os.Build
 import android.os.Parcelable
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
@@ -10,16 +9,19 @@ import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import com.google.firebase.firestore.SetOptions
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
-import java.time.LocalDateTime
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 @Parcelize
 data class Order(
     var id: String? = null,
+    var userId: String? = null,
     var total: Double = 0.0,
     var meals: Meal? = null,
-    var date: @RawValue LocalDateTime? = null
-) : Parcelable
+    var date: String? = null,
+) : Parcelable{
+
+}
 
 class Orders{
 
@@ -48,11 +50,7 @@ class Orders{
         val total: Double = orderInfo.total
         val meals: Meal? = orderInfo.meals
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            orders[Constants.ORDER_DATE] = date!!
-        }else{
-            orders[Constants.ORDER_DATE] = ""
-        }
+
         orders[Constants.ORDER_ID] = id!!
         orders[Constants.ORDER_TOTAL] = total
         orders[Constants.ORDER_MEALS] = meals!!

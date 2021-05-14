@@ -57,22 +57,16 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun makeOrder() {
-        val orderHashMap = HashMap<String, Any>()
-        val orderTitle = textViewTitle.text.toString().trim()
-        val orderDescription = textViewDescription.text.toString().trim()
-        val orderPrice = textViewPrice.text.toString().trim()
 
-        val currentDateTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDateTime.now()
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
+        val currentDate: String =
+            SimpleDateFormat("dd/MM/yyyy às HH:mm:ss", Locale.getDefault()).format(Date())
 
         val order = Order()
 
         order.let {
             it.id = Random.nextInt(1000).toString()
-            it.date = currentDateTime
+            it.date = currentDate
+            it.userId = SetUser().getCurrentUserId()
             it.meals = meal
             it.total = meal.price
         }
