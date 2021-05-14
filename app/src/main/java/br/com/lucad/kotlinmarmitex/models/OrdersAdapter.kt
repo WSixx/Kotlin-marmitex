@@ -18,8 +18,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import java.lang.ref.WeakReference
 
-class OrdersAdapter (options: FirestoreRecyclerOptions<Order>, private val listener: ClickListener) :
-FirestoreRecyclerAdapter<Order, OrdersViewHolder>(options) {
+class OrdersAdapter(options: FirestoreRecyclerOptions<Order>, private val listener: ClickListener) :
+    FirestoreRecyclerAdapter<Order, OrdersViewHolder>(options) {
 
 
     override fun onCreateViewHolder(
@@ -30,26 +30,35 @@ FirestoreRecyclerAdapter<Order, OrdersViewHolder>(options) {
             LayoutInflater.from(parent.context).inflate(R.layout.orders_adapter_item, parent, false)
         return OrdersViewHolder(view, listener)
     }
+
     override fun onBindViewHolder(
         holder: OrdersViewHolder,
         position: Int,
         model: Order
     ) {
-        val textViewOrderMealData: TextView = holder.itemView.findViewById(R.id.text_view_adapter_order_data)
+        val textViewOrderMealData: TextView =
+            holder.itemView.findViewById(R.id.text_view_adapter_order_data)
         val textviewOrderTotal: TextView =
             holder.itemView.findViewById(R.id.text_view_adapter_order_total)
         val imageViewOrder: ImageView = holder.itemView.findViewById(R.id.image_view_adapter_order)
         val buttonOrderDetail: Button = holder.itemView.findViewById(R.id.button_item_order_detail)
 
         buttonOrderDetail.setOnClickListener {
-          /*  val intent = Intent(it.context, PaymentActivity::class.java)
-            intent.putExtra(Constants.MEALS_MODEL, model)
-            it.context?.startActivity(intent)*/
+            /*  val intent = Intent(it.context, PaymentActivity::class.java)
+              intent.putExtra(Constants.MEALS_MODEL, model)
+              it.context?.startActivity(intent)*/
+        }
+
+        if(model.total.toString().endsWith("0")) {
+            textviewOrderTotal.text = "R$" + model.total.toString() + "0"
+
+        }else{
+            textviewOrderTotal.text = "R$" + model.total.toString()
         }
 
         textViewOrderMealData.text = "Feito em: " + model.date
-        textviewOrderTotal.text = "R$" + model.total.toString() + "0"
-        model.meals?.images?.get(0)?.let { getImageFromFirebase(holder.itemView, imageViewOrder, it) }
+        model.meals?.images?.get(0)
+            ?.let { getImageFromFirebase(holder.itemView, imageViewOrder, it) }
     }
 
     private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {
