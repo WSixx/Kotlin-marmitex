@@ -22,6 +22,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var myRecycle: RecyclerView
     private lateinit var adapter: MealsAdapter
+    private lateinit var listOfMeals: ArrayList<Meal>
+    private var totalPrie: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,8 @@ class HomeFragment : Fragment() {
         val query: Query = FirebaseUtils.firebaseFirestore.collection(Constants.MEALS).orderBy(Constants.USER_VOTOS, Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<Meal>().setQuery(query, Meal::class.java).setLifecycleOwner(this).build()
 
+        listOfMeals = ArrayList<Meal>()
+
          adapter = MealsAdapter(options, object : ClickListener {
             override fun onPositionClicked(position: Int) {
 
@@ -62,7 +66,7 @@ class HomeFragment : Fragment() {
             override fun onLongClicked(position: Int) {
                 // callback performed on click
             }
-        })
+        }, listOfMeals, totalPrie )
 
         myRecycle.adapter = adapter
         myRecycle.layoutManager = LinearLayoutManager(activity)
@@ -84,6 +88,8 @@ class HomeFragment : Fragment() {
             }
             R.id.action_cart -> {
                 val intent = Intent(activity, CartActivity::class.java)
+                intent.putExtra( Constants.GET_CART_ITEM, adapter.getListMeal())
+                intent.putExtra( Constants.CART_TOTAL, adapter.getTotal())
                 startActivity(intent)
                 return true
             }

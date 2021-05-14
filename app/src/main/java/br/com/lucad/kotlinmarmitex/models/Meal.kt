@@ -21,9 +21,7 @@ data class Meal(
     val votos: Int = 0,
     val quantity: Int = 0,
     val images: List<String>? = null
-) : Parcelable {
-
-}
+) : Parcelable
 
 class Meals() {
 

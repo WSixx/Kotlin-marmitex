@@ -11,6 +11,8 @@ object Constants {
     const val USERNAME_LOGGED: String = "username_logged"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
     const val MEALS_MODEL: String = "meal"
+    const val CART_TOTAL: String = "cart_total"
+    const val GET_CART_ITEM: String = "cart_item"
 
     const val ORDER_ID = "orderID"
     const val ORDER_TOTAL = "orderTotal"

@@ -20,7 +20,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import java.lang.ref.WeakReference
 
 
-class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener: ClickListener) :
+class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener: ClickListener, var listOfMeals: ArrayList<Meal>, var totalPrice: Double) :
     FirestoreRecyclerAdapter<Meal, MealsViewHolder>(options) {
 
 
@@ -43,17 +43,31 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener
             holder.itemView.findViewById(R.id.text_view_adapter_description)
         val imageViewMeal: ImageView = holder.itemView.findViewById(R.id.image_view_adapter_meal)
         val buttonOrder: Button = holder.itemView.findViewById(R.id.button_item_order_meal)
+        val buttonAddCart: Button = holder.itemView.findViewById(R.id.button_item_order_add_cart)
 
         buttonOrder.setOnClickListener {
-            Toast.makeText(it.context, "Pedir = ${model.title}", Toast.LENGTH_SHORT).show()
             val intent = Intent(it.context, PaymentActivity::class.java)
             intent.putExtra(Constants.MEALS_MODEL, model)
             it.context?.startActivity(intent)
         }
 
+        buttonAddCart.setOnClickListener {
+            listOfMeals.add(model)
+            totalPrice += model.price
+            Toast.makeText(it.context, "Item Adicionado: ${model.title}", Toast.LENGTH_SHORT).show()
+            notifyDataSetChanged()
+        }
+
         textViewMealTitle.text = model.title
         textviewMealDescription.text = model.description
         model.images?.get(0)?.let { getImageFromFirebase(holder.itemView, imageViewMeal, it) }
+    }
+
+    fun getListMeal(): ArrayList<Meal> {
+        return listOfMeals
+    }
+    fun getTotal(): Double{
+        return totalPrice
     }
 
     private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {
