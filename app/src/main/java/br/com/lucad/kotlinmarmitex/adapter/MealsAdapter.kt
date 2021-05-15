@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.models.CartObj
 import br.com.lucad.kotlinmarmitex.models.Meal
 import br.com.lucad.kotlinmarmitex.ui.views.PaymentActivity
 import br.com.lucad.kotlinmarmitex.utils.Constants
@@ -55,6 +56,7 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener
             listOfMeals.add(model)
             totalPrice += model.price
             Toast.makeText(it.context, "Item Adicionado: ${model.title}", Toast.LENGTH_SHORT).show()
+            CartObj.addCartItem(model)
             notifyDataSetChanged()
         }
 

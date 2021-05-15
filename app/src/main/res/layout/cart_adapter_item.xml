@@ -78,6 +78,7 @@
                 android:id="@+id/button_item_cart_remove"
                 android:layout_width="110dp"
                 android:layout_height="50dp"
+                android:backgroundTint="@color/red_900"
                 android:text="remover" />
 
         </LinearLayout>

@@ -2,6 +2,7 @@ package br.com.lucad.kotlinmarmitex.ui.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.adapter.CartAdapter
-import br.com.lucad.kotlinmarmitex.adapter.MealsAdapter
+import br.com.lucad.kotlinmarmitex.models.CartObj
 import br.com.lucad.kotlinmarmitex.models.Meal
 import br.com.lucad.kotlinmarmitex.utils.Constants
 
@@ -18,7 +19,9 @@ class CartActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var listCart: RecyclerView
     private lateinit var adapter: CartAdapter
-    private lateinit var textViewTotal: TextView
+    lateinit var textViewTotal: TextView
+    lateinit var buttonFinalizar: Button
+    private var totalPrice: Double = 0.0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,10 +31,10 @@ class CartActivity : AppCompatActivity() {
         createActionToolbar()
 
         var listOfMeals = intent.getParcelableArrayListExtra<Meal>(Constants.GET_CART_ITEM)!!
-        var totalPrice = intent.getDoubleExtra(Constants.CART_TOTAL, 0.0)
+        totalPrice = intent.getDoubleExtra(Constants.CART_TOTAL, 0.0)
 
         textViewTotal = findViewById(R.id.text_view_cart_total)
-        textViewTotal.text = "Total: R$$totalPrice"
+        textViewTotal.text = "Total: R$${CartObj.totalCart}"
 
         listCart = findViewById(R.id.recycle_cart)
         listCart.layoutManager = LinearLayoutManager(this)

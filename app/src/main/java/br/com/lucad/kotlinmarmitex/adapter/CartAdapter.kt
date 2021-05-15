@@ -4,11 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.models.CartObj
 import br.com.lucad.kotlinmarmitex.models.Meal
+import br.com.lucad.kotlinmarmitex.ui.views.CartActivity
 import com.bumptech.glide.Glide
 
 class CartAdapter(private val arrayOrders: ArrayList<Meal>, val context: Context) :
@@ -21,8 +24,18 @@ class CartAdapter(private val arrayOrders: ArrayList<Meal>, val context: Context
     }
 
     override fun onBindViewHolder(holder: ViewHolderCart, position: Int) {
-        println(arrayOrders)
-        arrayOrders[position].apply {
+       /* arrayOrders[position].apply {
+            holder.texViewTitleMealCart.text = this.title
+            holder.texViewDescriptionMealCart.text = this.description
+            holder.texViewPriceMealCart.text = "R$" + this.price.toString()
+            this.images?.get(0)?.let {
+                getImageFromFirebase(holder.itemView, holder.imageViewCart,
+                    it
+                )
+            }
+        }*/
+
+        CartObj.mealsList[position].apply {
             holder.texViewTitleMealCart.text = this.title
             holder.texViewDescriptionMealCart.text = this.description
             holder.texViewPriceMealCart.text = "R$" + this.price.toString()
@@ -32,6 +45,22 @@ class CartAdapter(private val arrayOrders: ArrayList<Meal>, val context: Context
                 )
             }
         }
+
+        holder.buttonRemoveItemCart.setOnClickListener {
+            //removeItemCart(position)
+            CartObj.removeCartItem(position)
+            notifyDataSetChanged()
+
+        }
+    }
+
+    private fun removeItemCart(position: Int){
+        arrayOrders.removeAt(position)
+        notifyDataSetChanged()
+    }
+
+    fun removeFromTotal(position: Int): Double{
+        return arrayOrders[position].price
     }
 
     private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {
@@ -44,7 +73,7 @@ class CartAdapter(private val arrayOrders: ArrayList<Meal>, val context: Context
     }
 
     override fun getItemCount(): Int {
-        return arrayOrders.size
+        return CartObj.mealsList.size
     }
 }
 
@@ -54,6 +83,7 @@ class ViewHolderCart(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var texViewPriceMealCart: TextView = itemView.findViewById(R.id.text_view_adapter_cart_price)
     var texViewDescriptionMealCart: TextView = itemView.findViewById(R.id.text_view_adapter_cart_description)
     var imageViewCart: ImageView = itemView.findViewById(R.id.image_view_adapter_cart)
+    var buttonRemoveItemCart: Button = itemView.findViewById(R.id.button_item_cart_remove)
 
 
 }
