@@ -38,14 +38,14 @@ class CartActivity : BaseActivity() {
 
     }
 
-    private fun loadAdapter(){
+    private fun loadAdapter() {
         listCart.layoutManager = LinearLayoutManager(this)
 
         adapter = CartAdapter(this)
         listCart.adapter = adapter
     }
 
-    private fun loadViews(){
+    private fun loadViews() {
         textViewTotal = findViewById(R.id.text_view_cart_total)
         textViewTotal.text = "Total: R$%.2f".format(CartObj.totalCart)
         buttonFinalizar = findViewById(R.id.button_cart_finalizar)
@@ -68,7 +68,7 @@ class CartActivity : BaseActivity() {
             it.total = CartObj.totalCart
         }
 
-        Orders().registerOrder(this, order)
+        Orders().registerOrder(order)
 
     }
 

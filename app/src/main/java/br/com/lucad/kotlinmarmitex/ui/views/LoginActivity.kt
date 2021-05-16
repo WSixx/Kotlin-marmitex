@@ -16,6 +16,7 @@ import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils.firebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import io.github.cdimascio.dotenv.dotenv
 
 
@@ -107,13 +108,13 @@ class LoginActivity : BaseActivity() {
     /* check if there's a signed-in user*/
     override fun onStart() {
         super.onStart()
-        /*val user = User()
-        userIsLogged(user)*/
-       /* val fireUser: FirebaseUser? = firebaseAuth.currentUser
-        val user = User()
+        //userIsLogged(user)
+       val fireUser: FirebaseUser? = firebaseAuth.currentUser
         fireUser?.let {
+            val user = User()
+            SetUser().getUserInfo(this@LoginActivity)
             userIsLogged(user)
-        }*/
+        }
     }
 
     private fun signIn() {
@@ -127,7 +128,7 @@ class LoginActivity : BaseActivity() {
                     if (signIn.isSuccessful) {
                         SetUser().getUserInfo(this@LoginActivity)
                     } else {
-                        errorSnackBar("Error ao logar", activityLogin, activityLogin )
+                        showErrorSnack("Error ao logar", true)
                         hideProgressLogin()
                     }
                 }
@@ -166,7 +167,7 @@ class LoginActivity : BaseActivity() {
                 }
 
                 .addOnFailureListener {exception ->
-                    errorSnackBar(AuthExceptions().handleException(exception), activityLogin, editPassword)
+                    showErrorSnack(AuthExceptions().handleException(exception), true)
                     hideProgressLogin()
                 }
 
@@ -178,7 +179,6 @@ class LoginActivity : BaseActivity() {
 
     fun userIsLogged(user: User?) {
         hideProgressLogin()
-
         if(user?.profileIsComplete == 0){
             val intent = Intent(this, EditProfileActivity::class.java)
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
@@ -188,10 +188,6 @@ class LoginActivity : BaseActivity() {
             startActivity(intent)
         }
         finish()
-    }
-
-    fun userRegisterSuccessful() {
-        sucessSnackBar("Conta criada com sucesso", activityLogin, activityLogin)
     }
 
     private fun userBlankFields() {
@@ -205,7 +201,6 @@ class LoginActivity : BaseActivity() {
     private fun showProgressLogin() {
         progressLogin.visibility = View.VISIBLE
     }
-
 
     private fun isNotEmpty(): Boolean = editEmail.text.toString().trim().isNotEmpty() &&
             editPassword.text.toString().trim().isNotEmpty()
