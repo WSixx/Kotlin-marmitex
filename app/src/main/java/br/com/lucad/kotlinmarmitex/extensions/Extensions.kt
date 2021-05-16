@@ -9,11 +9,6 @@ import com.google.android.material.snackbar.Snackbar
 
 object Extensions {
 
-
-   /* fun Activity.toast(msg: String){
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }*/
-
     fun Activity.sucessSnackBar(msg: String, view: View, anchorView: View){
         val mySnack = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
         mySnack.anchorView = anchorView

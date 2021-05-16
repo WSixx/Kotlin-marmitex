@@ -1,6 +1,5 @@
 package br.com.lucad.kotlinmarmitex.ui.views
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.exceptions.AuthExceptions
@@ -27,7 +25,7 @@ val dotenv = dotenv {
 } // <---- 1. Configure dotenv
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private lateinit var activityLogin: View
     private lateinit var editEmail: EditText
@@ -49,8 +47,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //TODO: CARREGAR OS VIEWS EM UM METODO -- CLICKS TBM
+        loadViews()
 
+        createAccountInputsArray = arrayOf(editEmail, editPassword)
+
+        loadClicks()
+
+
+
+    }
+
+    private fun loadViews(){
         activityLogin = findViewById(R.id.activity_login)
 
         buttonSignIn = findViewById(R.id.button_signin)
@@ -64,10 +71,9 @@ class LoginActivity : AppCompatActivity() {
         texViewCadastrar = findViewById(R.id.textView_cadastrar)
 
         progressLogin = findViewById(R.id.progress_login)
+    }
 
-        createAccountInputsArray = arrayOf(editEmail, editPassword)
-
-
+    private fun loadClicks(){
         buttonSignIn.setOnClickListener {
             if (texViewLogin.isVisible) signIn()
         }
@@ -77,12 +83,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         buttonSignUp.setOnClickListener {
-            //MyLoginFragment.newInstance().show(supportFragmentManager, MyLoginFragment.TAG)
             signUp()
         }
     }
 
-    //teste
     private fun buttonCadastrarClick() {
         if (texViewCadastrar.text == "voltar") {
             texViewCadastrar.text = "Cadastrar-se"
