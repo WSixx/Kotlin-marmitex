@@ -9,11 +9,6 @@ import android.widget.TextView
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 
-//TODO: FAZER UMA SPLASH SCREEN
-
-//TODO: SE TIVER TEMPO E PACIÊNCIA...ADD UM BOT CHAT COM IA DO GOOGLE CLOUD
-// OLHAR O EXEMPLO QUE FIZ EM FLUTTER
-
 //TODO: NO FINAL ESTUDAR O ANDROID MVVM -> SE POSSIVEL COLOCAR AQUI
 //TODO: NO FINAL AJEITAR PARA Clean Architecture
 

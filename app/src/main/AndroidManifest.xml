@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMarmitex"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.views.BaseActivity"></activity>
+        <activity android:name=".ui.views.LoginActivity" />
+        <activity android:name=".ui.views.BaseActivity" />
         <activity
             android:name=".ui.views.CartActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -37,7 +38,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.views.LoginActivity"
+            android:name=".ui.views.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
