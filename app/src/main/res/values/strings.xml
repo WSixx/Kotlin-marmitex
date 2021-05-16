@@ -3,11 +3,13 @@
     <string name="login_email">Email</string>
     <string name="password_text">password</string>
     <string name="button_login_text">Login</string>
-    <string name="login_text">Login</string>
     <string name="segunda_activity_toolbar">Segunda Activity</string>
     <string name="title_home">Home</string>
     <string name="title_pedidos">Pedidos</string>
     <string name="title_perfil">Perfil</string>
+    <string name="casdatrar_text">Cadastrar-se</string>
+    <string name="voltar_text">voltar</string>
+    <string name="login_text">Login</string>
 
     <!-- TODO: ADICIONAR TODOS OS NOMES DO LAYOUT AQUI -->
 

@@ -10,8 +10,6 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.exceptions.AuthExceptions
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.sucessSnackBar
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
@@ -54,8 +52,6 @@ class LoginActivity : BaseActivity() {
 
         loadClicks()
 
-
-
     }
 
     private fun loadViews(){
@@ -89,16 +85,16 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun buttonCadastrarClick() {
-        if (texViewCadastrar.text == "voltar") {
-            texViewCadastrar.text = "Cadastrar-se"
-            texViewLogin.text = "Login"
+        if (texViewCadastrar.text == getString(R.string.voltar_text)) {
+            texViewCadastrar.text = getString(R.string.casdatrar_text)
+            texViewLogin.text = getString(R.string.login_text)
             buttonSignUp.visibility = View.GONE
             buttonSignIn.visibility = View.VISIBLE
             editNomeUser.visibility = View.GONE
 
         } else {
-            texViewCadastrar.text = "voltar"
-            texViewLogin.text = "Cadastrar"
+            texViewCadastrar.text = getString(R.string.voltar_text)
+            texViewLogin.text = getString(R.string.casdatrar_text)
             buttonSignUp.visibility = View.VISIBLE
             buttonSignIn.visibility = View.GONE
             editNomeUser.visibility = View.VISIBLE
@@ -108,7 +104,6 @@ class LoginActivity : BaseActivity() {
     /* check if there's a signed-in user*/
     override fun onStart() {
         super.onStart()
-        //userIsLogged(user)
        val fireUser: FirebaseUser? = firebaseAuth.currentUser
         fireUser?.let {
             val user = User()
@@ -118,7 +113,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun signIn() {
-        showProgressLogin()
+        showMyProgressBar()
         userEmail = editEmail.text.toString().trim()
         userPassword = editPassword.text.toString().trim()
 
@@ -129,12 +124,12 @@ class LoginActivity : BaseActivity() {
                         SetUser().getUserInfo(this@LoginActivity)
                     } else {
                         showErrorSnack("Error ao logar", true)
-                        hideProgressLogin()
+                        hideMyProgressBar()
                     }
                 }
         } else {
             userBlankFields()
-            hideProgressLogin()
+            hideMyProgressBar()
         }
     }
 
@@ -143,7 +138,7 @@ class LoginActivity : BaseActivity() {
         userPassword = editPassword.text.toString().trim()
         userName = editNomeUser.text.toString().trim()
 
-        showProgressLogin()
+        showMyProgressBar()
 
         if (isNotEmpty()) {
             firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
@@ -168,17 +163,17 @@ class LoginActivity : BaseActivity() {
 
                 .addOnFailureListener {exception ->
                     showErrorSnack(AuthExceptions().handleException(exception), true)
-                    hideProgressLogin()
+                    hideMyProgressBar()
                 }
 
         } else {
             userBlankFields()
-            hideProgressLogin()
+            hideMyProgressBar()
         }
     }
 
     fun userIsLogged(user: User?) {
-        hideProgressLogin()
+        hideMyProgressBar()
         if(user?.profileIsComplete == 0){
             val intent = Intent(this, EditProfileActivity::class.java)
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
@@ -191,16 +186,9 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun userBlankFields() {
-        errorSnackBar(Constants.BLANK_FIELD, activityLogin, activityLogin )
+        showErrorSnack(Constants.BLANK_FIELD, true )
     }
 
-    fun hideProgressLogin() {
-        progressLogin.visibility = View.GONE
-    }
-
-    private fun showProgressLogin() {
-        progressLogin.visibility = View.VISIBLE
-    }
 
     private fun isNotEmpty(): Boolean = editEmail.text.toString().trim().isNotEmpty() &&
             editPassword.text.toString().trim().isNotEmpty()

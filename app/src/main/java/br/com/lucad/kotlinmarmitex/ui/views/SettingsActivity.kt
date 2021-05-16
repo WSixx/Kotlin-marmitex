@@ -1,21 +1,19 @@
 package br.com.lucad.kotlinmarmitex.ui.views
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import br.com.lucad.kotlinmarmitex.MainActivity
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var progressBar: ProgressBar
@@ -73,7 +71,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     fun dataIsLoaded(user: User){
-        hideProgressBar()
+        hideMyProgressBar()
         buttonSettingEdit.isEnabled = true
         buttonSettingLogout.isEnabled = true
 
@@ -94,8 +92,4 @@ class SettingsActivity : AppCompatActivity() {
         buttonSettingLogout.isEnabled = false
     }
 
-    fun hideProgressBar(){
-        progressBar.visibility = View.GONE
-
-    }
 }

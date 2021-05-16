@@ -1,7 +1,6 @@
 package br.com.lucad.kotlinmarmitex.ui.views
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -9,13 +8,11 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import br.com.lucad.kotlinmarmitex.R
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.sucessSnackBar
 import br.com.lucad.kotlinmarmitex.models.SetUser
 import br.com.lucad.kotlinmarmitex.models.User
 import br.com.lucad.kotlinmarmitex.utils.Constants
 
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity : BaseActivity() {
 
     private lateinit var editProfileNome: EditText
     private lateinit var editProfileEmail: EditText
@@ -50,7 +47,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         buttonSave = findViewById(R.id.button_save_edit)
 
-        if(intent.hasExtra(Constants.EXTRA_USER_DETAILS)){
+        if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             user = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
         }
 
@@ -70,14 +67,14 @@ class EditProfileActivity : AppCompatActivity() {
 
         createActionToolbar()
 
-        toolbar.setNavigationOnClickListener{
+        toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 
     }
 
-    private fun updateUserProfileDetails(){
-        if(checkIfPhoneIsEmpty()){
+    private fun updateUserProfileDetails() {
+        if (checkIfPhoneIsEmpty()) {
             progressEdit.visibility = View.VISIBLE
             buttonSave.isEnabled = false
             val userHashMap = HashMap<String, Any>()
@@ -96,19 +93,19 @@ class EditProfileActivity : AppCompatActivity() {
             userHashMap[Constants.USER_STREET] = street
             userHashMap[Constants.PROFILE_IS_COMPLETE] = 1
 
-            SetUser().updateUserInfo(this, userHashMap )
+            SetUser().updateUserInfo(this, userHashMap)
         }
     }
 
-    private fun saveDataButton(){
+    private fun saveDataButton() {
 
         buttonSave.setOnClickListener {
-           updateUserProfileDetails()
+            updateUserProfileDetails()
         }
     }
 
 
-    private fun createActionToolbar(){
+    private fun createActionToolbar() {
         toolbar = findViewById(R.id.toolbar_editar)
         setSupportActionBar(toolbar)
 
@@ -118,30 +115,33 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
 
-    private fun checkIfPhoneIsEmpty(): Boolean{
+    private fun checkIfPhoneIsEmpty(): Boolean {
         val phone = editProfilePhone.text.toString().trim()
         val city = editProfileCity.text.toString().trim()
         val street = editProfileStreet.text.toString().trim()
         val uf = editProfileUF.text.toString().trim()
         val ddd = editProfileDDD.text.toString().trim()
         val district = editProfileDistrict.text.toString().trim()
-        return if(phone.isEmpty() || phone.isBlank() || phone.length < 9
+        return if (phone.isEmpty() || phone.isBlank() || phone.length < 9
             || city.isEmpty() || city.isBlank() || city.length < 3
             || street.isEmpty() || street.isBlank() || street.length < 5
             || uf.isEmpty() || uf.isBlank()
             || ddd.isEmpty() || ddd.isBlank()
             || district.isEmpty() || district.isBlank() || district.length < 4
-        ){
-            errorSnackBar("Digite um Dados Válidos", findViewById(R.id.activity_edit),  findViewById(R.id.button_save_edit))
+        ) {
+            showErrorSnack("Digite um Dados Válidos", true)
             false
-        }else{
+        } else {
             true
         }
     }
 
-    fun afterSaveNewInformationSuccessful(){
-        hideProgressEdit()
-        sucessSnackBar("Sucesso ao atualizar Usuario - Edit", findViewById(R.id.activity_edit),  findViewById(R.id.button_save_edit))
+    fun afterSaveNewInformationSuccessful() {
+        hideMyProgressBar()
+        showErrorSnack(
+            "Sucesso ao atualizar Usuario",
+            false
+        )
         buttonSave.isEnabled = true
 
         val intent = Intent(this, HomeActivity::class.java)
@@ -149,8 +149,5 @@ class EditProfileActivity : AppCompatActivity() {
         finish()
     }
 
-    fun hideProgressEdit() {
-        progressEdit.visibility = View.GONE
-    }
 
 }

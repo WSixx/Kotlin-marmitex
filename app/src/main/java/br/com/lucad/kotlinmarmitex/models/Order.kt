@@ -1,6 +1,5 @@
 package br.com.lucad.kotlinmarmitex.models
 
-import android.app.Activity
 import android.os.Parcelable
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils

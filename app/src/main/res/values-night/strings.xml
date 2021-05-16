@@ -5,4 +5,5 @@
     <string name="button_login_text">Login</string>
     <string name="login_text">Login</string>
     <string name="segunda_activity_toolbar">Segunda Activity</string>
+    <string name="casdatrar_text">Cadastrar-se</string>
 </resources>

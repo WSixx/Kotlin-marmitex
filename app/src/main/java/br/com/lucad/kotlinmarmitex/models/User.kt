@@ -5,15 +5,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Parcelable
 import android.util.Log
-import br.com.lucad.kotlinmarmitex.R
-import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
 import br.com.lucad.kotlinmarmitex.ui.views.EditProfileActivity
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import br.com.lucad.kotlinmarmitex.ui.views.LoginActivity
 import br.com.lucad.kotlinmarmitex.ui.views.SettingsActivity
-import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.SetOptions
 import kotlinx.parcelize.Parcelize
@@ -45,14 +41,10 @@ class SetUser {
             .document(userInfo.id!!)
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
-                activity.hideProgressLogin()
+                activity.hideMyProgressBar()
             }
             .addOnFailureListener {
-                activity.errorSnackBar(
-                    "Error ao salvar user",
-                    activity.findViewById(R.id.activity_login),
-                    activity.findViewById(R.id.text_view_login)
-                )
+
             }
     }
 
@@ -62,29 +54,20 @@ class SetUser {
             .document(getCurrentUserId())
             .update(userHashMap)
             .addOnSuccessListener {
-
                 when (activity) {
                     is EditProfileActivity -> {
                         activity.afterSaveNewInformationSuccessful()
                     }
                 }
             }
-
             .addOnFailureListener { e ->
-
                 when (activity) {
                     is EditProfileActivity -> {
-                        activity.hideProgressEdit()
+                        activity.hideMyProgressBar()
                         activity.buttonSave.isEnabled = true
                     }
-
                 }
                 Log.d("Error Update User: ", e.printStackTrace().toString())
-                activity.errorSnackBar(
-                    "Error ao atualizar Usuario - Edit",
-                    activity.findViewById(R.id.activity_login),
-                    activity.findViewById(R.id.activity_login)
-                )
             }
     }
 
@@ -133,13 +116,11 @@ class SetUser {
             .addOnFailureListener {
                 when (activity) {
                     is LoginActivity -> {
-                        activity.hideProgressLogin()
+                        activity.hideMyProgressBar()
                     }
-
                     is SettingsActivity -> {
-                        activity.hideProgressBar()
+                        activity.hideMyProgressBar()
                     }
-
                 }
             }
     }
