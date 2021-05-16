@@ -1,23 +1,18 @@
 package br.com.lucad.kotlinmarmitex.ui.views
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.models.*
 import br.com.lucad.kotlinmarmitex.utils.Constants
-import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
-import com.google.type.DateTime
+import br.com.lucad.kotlinmarmitex.utils.LoadImage
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.HashMap
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 class PaymentActivity : AppCompatActivity() {
@@ -26,6 +21,7 @@ class PaymentActivity : AppCompatActivity() {
     private lateinit var textViewTitle: TextView
     private lateinit var textViewDescription: TextView
     private lateinit var textViewPrice: TextView
+    private lateinit var imageViewMeal: ImageView
     private lateinit var buttonPayment: Button
 
     private var meal: Meal = Meal()
@@ -37,11 +33,20 @@ class PaymentActivity : AppCompatActivity() {
         textViewTitle = findViewById(R.id.text_view_title_payment)
         textViewDescription = findViewById(R.id.text_view_description_payment)
         textViewPrice = findViewById(R.id.text_view_price_payment)
+        imageViewMeal = findViewById(R.id.image_view_payment)
         buttonPayment = findViewById(R.id.button_payment)
 
         if (intent.hasExtra(Constants.MEALS_MODEL)) {
             meal = intent.getParcelableExtra(Constants.MEALS_MODEL)!!
-            Toast.makeText(this, "ENTROEU", Toast.LENGTH_LONG).show()
+            textViewTitle.text = meal.title
+            textViewDescription.text = meal.description
+            textViewPrice.text = meal.price.toString()
+
+            meal.images?.get(0)?.let {
+                LoadImage().getImageFromFirebase(imageViewMeal, imageViewMeal,
+                    it
+                )
+            }
         }
 
         createActionToolbar()
@@ -64,14 +69,14 @@ class PaymentActivity : AppCompatActivity() {
         val order = Order()
 
         order.let {
-            it.id = Random.nextInt(1000).toString()
+            it.id = Random.nextInt(2000).toString()
             it.date = currentDate
             it.userId = SetUser().getCurrentUserId()
-            it.meals = meal
+            it.meals = ArrayList()
             it.total = meal.price
         }
 
-        Orders().registerOrder(this, order)
+       // Orders().registerOrder(this, order, )
 
     }
 

@@ -14,7 +14,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Meal(
-    val id: String? = null,
     val title: String? = null,
     val description: String? = null,
     val price: Double = 0.0,

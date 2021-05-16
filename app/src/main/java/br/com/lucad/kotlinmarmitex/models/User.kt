@@ -98,8 +98,6 @@ class SetUser {
 
 
     fun getCurrentUserId(): String {
-        val currentUser = FirebaseUtils.firebaseUser
-
         var currentUserId = ""
         val user: FirebaseUser? = FirebaseUtils.firebaseAuth.currentUser
         user?.let {

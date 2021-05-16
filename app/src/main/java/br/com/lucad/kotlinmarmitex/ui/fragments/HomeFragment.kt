@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
         val query: Query = FirebaseUtils.firebaseFirestore.collection(Constants.MEALS).orderBy(Constants.USER_VOTOS, Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<Meal>().setQuery(query, Meal::class.java).setLifecycleOwner(this).build()
 
-        listOfMeals = ArrayList<Meal>()
+        listOfMeals = ArrayList()
 
          adapter = MealsAdapter(options, object : ClickListener {
             override fun onPositionClicked(position: Int) {
@@ -88,8 +88,6 @@ class HomeFragment : Fragment() {
             }
             R.id.action_cart -> {
                 val intent = Intent(activity, CartActivity::class.java)
-                intent.putExtra( Constants.GET_CART_ITEM, adapter.getListMeal())
-                intent.putExtra( Constants.CART_TOTAL, adapter.getTotal())
                 startActivity(intent)
                 return true
             }

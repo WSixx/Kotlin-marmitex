@@ -1,10 +1,11 @@
 package br.com.lucad.kotlinmarmitex.models
 
+import android.app.Activity
 import android.os.Parcelable
+import android.view.View
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.errorSnackBar
 import br.com.lucad.kotlinmarmitex.extensions.Extensions.sucessSnackBar
-import br.com.lucad.kotlinmarmitex.ui.views.PaymentActivity
 import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import com.google.firebase.firestore.SetOptions
@@ -17,21 +18,18 @@ data class Order(
     var id: String? = null,
     var userId: String? = null,
     var total: Double = 0.0,
-    var meals: Meal? = null,
+    var meals: ArrayList<Meal>? = null,
     var date: String? = null,
-) : Parcelable{
-
-}
+) : Parcelable
 
 class Orders{
 
-    fun registerOrder(activity: PaymentActivity, orderInfo: Order) {
+    fun registerOrder(activity: Activity, orderInfo: Order, item: View) {
         FirebaseUtils.firebaseFirestore.collection(Constants.ORDERS)
             .document(orderInfo.id!!)
             .set(orderInfo, SetOptions.merge())
             .addOnSuccessListener {
-                activity.sucessSnackBar("Pedido Cadastrado", activity.findViewById(R.id.activity_payment),  activity.findViewById(
-                    R.id.image_view_payment))
+                activity.sucessSnackBar("Pedido Cadastrado", item,  item)
                 addOrderToUser(orderInfo)
 
             }
@@ -48,7 +46,7 @@ class Orders{
         val date = orderInfo.date
         val id: String? = orderInfo.id
         val total: Double = orderInfo.total
-        val meals: Meal? = orderInfo.meals
+        val meals: ArrayList<Meal> = orderInfo.meals!!
 
 
         orders[Constants.ORDER_ID] = id!!

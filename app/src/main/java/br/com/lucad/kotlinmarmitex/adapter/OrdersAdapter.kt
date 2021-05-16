@@ -55,8 +55,13 @@ class OrdersAdapter(options: FirestoreRecyclerOptions<Order>, private val listen
         }
 
         textViewOrderMealData.text = "Feito em: " + model.date
-        model.meals?.images?.get(0)
-            ?.let { getImageFromFirebase(holder.itemView, imageViewOrder, it) }
+        model.meals?.get(0)?.images?.get(0)?.let {
+            getImageFromFirebase(holder.itemView, imageViewOrder,
+                it
+            )
+        }
+        /*model.meals?.get(position)?.images?.get(0)
+            ?.let { getImageFromFirebase(holder.itemView, imageViewOrder, it) }*/
     }
 
     private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {

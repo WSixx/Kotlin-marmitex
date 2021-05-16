@@ -14,7 +14,7 @@ import br.com.lucad.kotlinmarmitex.models.Meal
 import br.com.lucad.kotlinmarmitex.ui.views.CartActivity
 import com.bumptech.glide.Glide
 
-class CartAdapter(private val arrayOrders: ArrayList<Meal>, val context: Context) :
+class CartAdapter( val context: Context) :
     RecyclerView.Adapter<ViewHolderCart>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderCart {
@@ -52,15 +52,6 @@ class CartAdapter(private val arrayOrders: ArrayList<Meal>, val context: Context
             notifyDataSetChanged()
 
         }
-    }
-
-    private fun removeItemCart(position: Int){
-        arrayOrders.removeAt(position)
-        notifyDataSetChanged()
-    }
-
-    fun removeFromTotal(position: Int): Double{
-        return arrayOrders[position].price
     }
 
     private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {
