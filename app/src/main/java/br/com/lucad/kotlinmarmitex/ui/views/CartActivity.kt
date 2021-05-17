@@ -3,6 +3,7 @@ package br.com.lucad.kotlinmarmitex.ui.views
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +35,6 @@ class CartActivity : BaseActivity() {
 
         buttonFinalizar.setOnClickListener {
             makeOrder()
-            finish()
         }
 
     }
@@ -54,32 +54,47 @@ class CartActivity : BaseActivity() {
         listCart = findViewById(R.id.recycle_cart)
     }
 
-    private fun makeOrder() {
-
+    private fun removeQuantityMeal(): Boolean {
         val mealsToRemove = Meals()
+        var myReturn: Boolean = false
 
-        for (meals in CartObj.mealsList){
+        for (meals in CartObj.mealsList) {
             val myHashMeals = HashMap<String, Any>()
             var quantity = meals.quantity - 1
-            myHashMeals["quantity"] = quantity
-            mealsToRemove.updateMealQuantity(meals.id!!, myHashMeals)
+            if (quantity < 0) {
+                myReturn = false
+                break
+            } else {
+                myHashMeals["quantity"] = quantity
+                mealsToRemove.updateMealQuantity(meals.id!!, myHashMeals)
+                myReturn = true
+            }
         }
 
-        val currentDate: String =
-            SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault()).format(Date())
+        return myReturn
+    }
 
-        val order = Order()
+    private fun makeOrder() {
 
-        order.let {
-            it.id = Random.nextInt(2000).toString()
-            it.date = currentDate
-            it.userId = SetUser().getCurrentUserId()
-            it.meals = CartObj.mealsList
-            it.total = CartObj.totalCart
+        if(removeQuantityMeal()){
+            val currentDate: String =
+                SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault()).format(Date())
+
+            val order = Order()
+
+            order.let {
+                it.id = Random.nextInt(2000).toString()
+                it.date = currentDate
+                it.userId = SetUser().getCurrentUserId()
+                it.meals = CartObj.mealsList
+                it.total = CartObj.totalCart
+            }
+
+            Orders().registerOrder(order)
+            finish()
+        }else{
+            showErrorSnack("Pedido não realizado", true)
         }
-
-        Orders().registerOrder(order)
-
     }
 
     private fun createActionToolbar() {
