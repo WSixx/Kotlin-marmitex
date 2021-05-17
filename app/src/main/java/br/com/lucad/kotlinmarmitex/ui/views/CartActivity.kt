@@ -3,7 +3,6 @@ package br.com.lucad.kotlinmarmitex.ui.views
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,13 +14,15 @@ import java.util.*
 import kotlin.collections.HashMap
 import kotlin.random.Random
 
+
 class CartActivity : BaseActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var listCart: RecyclerView
     private lateinit var adapter: CartAdapter
-    lateinit var textViewTotal: TextView
+    private lateinit var textViewTotal: TextView
     private lateinit var buttonFinalizar: Button
+    private lateinit var quantityLessThanZero: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +33,10 @@ class CartActivity : BaseActivity() {
 
         loadViews()
         loadAdapter()
+
+        if(CartObj.mealsList.isEmpty()){
+            buttonFinalizar.isEnabled = false
+        }
 
         buttonFinalizar.setOnClickListener {
             makeOrder()
@@ -56,13 +61,14 @@ class CartActivity : BaseActivity() {
 
     private fun removeQuantityMeal(): Boolean {
         val mealsToRemove = Meals()
-        var myReturn: Boolean = false
+        var myReturn = false
 
         for (meals in CartObj.mealsList) {
             val myHashMeals = HashMap<String, Any>()
-            var quantity = meals.quantity - 1
+            val quantity = meals.quantity - 1
             if (quantity < 0) {
                 myReturn = false
+                quantityLessThanZero = meals.title!!
                 break
             } else {
                 myHashMeals["quantity"] = quantity
@@ -76,7 +82,7 @@ class CartActivity : BaseActivity() {
 
     private fun makeOrder() {
 
-        if(removeQuantityMeal()){
+        if (removeQuantityMeal()) {
             val currentDate: String =
                 SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault()).format(Date())
 
@@ -91,10 +97,17 @@ class CartActivity : BaseActivity() {
             }
 
             Orders().registerOrder(order)
+            clearAdapterData()
             finish()
-        }else{
-            showErrorSnack("Pedido não realizado", true)
+        } else {
+            showErrorSnack("Pedido não realizado $quantityLessThanZero não tem mais estoque", true)
         }
+    }
+
+    private fun clearAdapterData() {
+        CartObj.mealsList.clear()
+        CartObj.totalCart = 0.0
+        adapter.notifyDataSetChanged()
     }
 
     private fun createActionToolbar() {

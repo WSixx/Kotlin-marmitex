@@ -10,8 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.models.CartObj
-import br.com.lucad.kotlinmarmitex.models.Meal
-import br.com.lucad.kotlinmarmitex.ui.views.CartActivity
 import com.bumptech.glide.Glide
 
 class CartAdapter( val context: Context) :
@@ -42,6 +40,8 @@ class CartAdapter( val context: Context) :
 
         }
     }
+
+
 
     private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {
         Glide.with(itemView)
