@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var myRecycle: RecyclerView
     private lateinit var adapter: MealsAdapter
     private lateinit var listOfMeals: ArrayList<Meal>
-    private var totalPrie: Double = 0.0
+    private var totalPrice: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
             override fun onLongClicked(position: Int) {
                 // callback performed on click
             }
-        }, listOfMeals, totalPrie )
+        }, listOfMeals, totalPrice )
 
         myRecycle.adapter = adapter
         myRecycle.layoutManager = LinearLayoutManager(activity)

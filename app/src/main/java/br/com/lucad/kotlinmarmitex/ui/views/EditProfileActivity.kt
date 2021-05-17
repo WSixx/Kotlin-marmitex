@@ -2,7 +2,6 @@ package br.com.lucad.kotlinmarmitex.ui.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -32,6 +31,39 @@ class EditProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
+        loadViews()
+
+        if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
+            user = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
+        }
+
+        editProfileNome.isEnabled = false
+        editProfileNome.setText(user.username)
+        editProfileEmail.isEnabled = false
+        editProfileEmail.setText(user.email)
+
+        checkIfIntentHasAllExtra()
+
+        saveDataButton()
+
+        createActionToolbar()
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
+    }
+
+    private fun checkIfIntentHasAllExtra(){
+        if (user.userCity.isNotEmpty()) editProfileCity.setText(user.userCity) else ""
+        if (user.userPhone.isNotEmpty()) editProfilePhone.setText(user.userPhone) else ""
+        if (user.userDdd.isNotEmpty()) editProfileDDD.setText(user.userDdd) else ""
+        if (user.userDistrict.isNotEmpty()) editProfileDistrict.setText(user.userDistrict) else ""
+        if (user.userUF.isNotEmpty()) editProfileUF.setText(user.userUF) else ""
+        if (user.userStreet.isNotEmpty()) editProfileStreet.setText(user.userStreet) else ""
+    }
+
+    private fun loadViews() {
         editProfileNome = findViewById(R.id.editText_edit_nome)
         editProfileEmail = findViewById(R.id.editText_edit_email)
         editProfilePhone = findViewById(R.id.editText_edit_phone)
@@ -45,31 +77,6 @@ class EditProfileActivity : BaseActivity() {
         progressEdit = findViewById(R.id.progressBar_edit)
 
         buttonSave = findViewById(R.id.button_save_edit)
-
-        if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
-            user = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
-        }
-
-        editProfileNome.isEnabled = false
-        editProfileNome.setText(user.username)
-        editProfileEmail.isEnabled = false
-        editProfileEmail.setText(user.email)
-
-        if (user.userCity.isNotEmpty()) editProfileCity.setText(user.userCity) else ""
-        if (user.userPhone.isNotEmpty()) editProfilePhone.setText(user.userPhone) else ""
-        if (user.userDdd.isNotEmpty()) editProfileDDD.setText(user.userDdd) else ""
-        if (user.userDistrict.isNotEmpty()) editProfileDistrict.setText(user.userDistrict) else ""
-        if (user.userUF.isNotEmpty()) editProfileUF.setText(user.userUF) else ""
-        if (user.userStreet.isNotEmpty()) editProfileStreet.setText(user.userStreet) else ""
-
-        saveDataButton()
-
-        createActionToolbar()
-
-        toolbar.setNavigationOnClickListener {
-            onBackPressed()
-        }
-
     }
 
     private fun updateUserProfileDetails() {
