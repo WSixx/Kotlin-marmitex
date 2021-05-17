@@ -12,7 +12,9 @@ import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.models.CartObj
 import br.com.lucad.kotlinmarmitex.models.Meal
-import br.com.lucad.kotlinmarmitex.utils.LoadImage
+import br.com.lucad.kotlinmarmitex.models.Meals
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.models.SlideModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import java.lang.ref.WeakReference
@@ -37,9 +39,9 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener
         model: Meal
     ) {
         val textViewMealTitle: TextView = holder.itemView.findViewById(R.id.text_view_adapter_title)
-        val textviewMealDescription: TextView =
+        val textViewMealDescription: TextView =
             holder.itemView.findViewById(R.id.text_view_adapter_description)
-        val imageViewMeal: ImageView = holder.itemView.findViewById(R.id.image_view_adapter_meal)
+        val textViewMealPrice: TextView = holder.itemView.findViewById(R.id.text_view_adapter_price)
         val buttonAddCart: Button = holder.itemView.findViewById(R.id.button_item_order_add_cart)
 
         buttonAddCart.setOnClickListener {
@@ -50,8 +52,19 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener
         }
 
         textViewMealTitle.text = model.title
-        textviewMealDescription.text = model.description
-        model.images?.get(0)?.let { LoadImage().getImageFromFirebase(holder.itemView, imageViewMeal, it) }
+        textViewMealDescription.text = model.description
+        textViewMealPrice.text = "R$${model.price}"
+
+
+        val imageList = ArrayList<SlideModel>()
+        for (images in model.images!!){
+            imageList.add(SlideModel(images))
+        }
+
+        val imageSlider = holder.itemView.findViewById<ImageSlider>(R.id.image_view_adapter_meal)
+        imageSlider.setImageList(imageList)
+
+        //model.images?.get(0)?.let { LoadImage().getImageFromFirebase(holder.itemView, imageViewMeal, it) }
     }
 
 }

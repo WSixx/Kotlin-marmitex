@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp"
     android:layout_margin="6dp"
-    android:elevation="7dp">
+    android:elevation="7dp"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,11 +19,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/image_view_adapter_meal"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"/>
+                android:layout_width="150dp"
+                android:layout_height="160dp"
+                android:padding="10dp"
+                app:iss_auto_cycle="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,19 +35,23 @@
                     android:id="@+id/text_view_adapter_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="FEIJOADA"
+                    android:layout_margin="10dp"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_margin="10dp"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/text_view_adapter_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="feijoada muito boa mesmo"
-                    android:textSize="16sp"
-                    android:layout_margin="10dp"/>
+                    android:layout_margin="10dp"
+                    android:textSize="16sp" />
 
+                <TextView
+                    android:id="@+id/text_view_adapter_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -53,30 +59,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp"
+            android:layout_gravity="end"
             android:background="@color/gray"
-            android:layout_gravity="end">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/image_view_item_like"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_favorite_24"
-                android:text="Like"/>
+                android:src="@drawable/ic_baseline_favorite_24" />
 
             <ImageView
                 android:id="@+id/image_view_item_deslike"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
-                android:src="@drawable/ic_baseline_dangerous_24"
-                android:text="Like"/>
+                android:src="@drawable/ic_baseline_dangerous_24"/>
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="2"/>
+                android:layout_weight="2" />
 
             <Button
                 android:id="@+id/button_item_order_add_cart"
@@ -87,7 +91,7 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="2"/>
+                android:layout_weight="2" />
 
         </LinearLayout>
 

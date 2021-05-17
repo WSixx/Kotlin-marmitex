@@ -11,6 +11,7 @@ import br.com.lucad.kotlinmarmitex.adapter.CartAdapter
 import br.com.lucad.kotlinmarmitex.models.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.random.Random
 
 class CartActivity : BaseActivity() {
@@ -55,8 +56,17 @@ class CartActivity : BaseActivity() {
 
     private fun makeOrder() {
 
+        val mealsToRemove = Meals()
+
+        for (meals in CartObj.mealsList){
+            val myHashMeals = HashMap<String, Any>()
+            var quantity = meals.quantity - 1
+            myHashMeals["quantity"] = quantity
+            mealsToRemove.updateMealQuantity(meals.id!!, myHashMeals)
+        }
+
         val currentDate: String =
-            SimpleDateFormat("dd/MM/yyyy às HH:mm:ss", Locale.getDefault()).format(Date())
+            SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault()).format(Date())
 
         val order = Order()
 

@@ -10,6 +10,15 @@
     <string name="casdatrar_text">Cadastrar-se</string>
     <string name="voltar_text">voltar</string>
     <string name="login_text">Login</string>
+    <string name="nome_text">Nome</string>
+    <string name="email_text">Email</string>
+    <string name="ddd_text">DDD</string>
+    <string name="phone_text">Phone</string>
+    <string name="endereco_text">Endereco</string>
+    <string name="uf_text">UF</string>
+    <string name="cidade_cidade">Cidade</string>
+    <string name="bairro_text">Bairro</string>
+    <string name="salvar_text">Salvar</string>
 
     <!-- TODO: ADICIONAR TODOS OS NOMES DO LAYOUT AQUI -->
 

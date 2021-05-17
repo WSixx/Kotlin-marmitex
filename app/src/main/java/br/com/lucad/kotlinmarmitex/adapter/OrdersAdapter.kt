@@ -10,8 +10,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
+import br.com.lucad.kotlinmarmitex.models.CartObj
 import br.com.lucad.kotlinmarmitex.models.Order
 import com.bumptech.glide.Glide
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.models.SlideModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import java.lang.ref.WeakReference
@@ -47,21 +50,21 @@ class OrdersAdapter(options: FirestoreRecyclerOptions<Order>, private val listen
               it.context?.startActivity(intent)*/
         }
 
-        if(model.total.toString().endsWith("0")) {
-            textviewOrderTotal.text = "R$" + model.total.toString() + "0"
+        val total = "R$%.2f".format(model.total)
 
-        }else{
-            textviewOrderTotal.text = "R$" + model.total.toString()
-        }
+
+        textviewOrderTotal.text = total
 
         textViewOrderMealData.text = "Feito em: " + model.date
+
+
         model.meals?.get(0)?.images?.get(0)?.let {
-            getImageFromFirebase(holder.itemView, imageViewOrder,
+            getImageFromFirebase(
+                holder.itemView, imageViewOrder,
                 it
             )
         }
-        /*model.meals?.get(position)?.images?.get(0)
-            ?.let { getImageFromFirebase(holder.itemView, imageViewOrder, it) }*/
+
     }
 
     private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {
@@ -75,16 +78,13 @@ class OrdersAdapter(options: FirestoreRecyclerOptions<Order>, private val listen
 
 }
 
-
 class OrdersViewHolder(itemView: View, listener: ClickListener) :
     RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
 
     private var listenerRef: WeakReference<ClickListener> = WeakReference(listener)
     private var buttonOrderDetail: Button = itemView.findViewById(R.id.button_item_order_detail)
 
     init {
-
         buttonOrderDetail = itemView.findViewById(R.id.button_item_order_detail)
 
         itemView.setOnClickListener(this)

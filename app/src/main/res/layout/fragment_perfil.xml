@@ -1,22 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.PerfilFragment">
+    android:id="@+id/activity_edit"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/text_notifications"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical"
+        tools:context=".views.ui.views.EditProfileActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_editar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Editar Perfil"
+            android:gravity="center">
+        </androidx.appcompat.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/imageView_profile_pic_edit"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_margin="25dp"
+            android:src="@drawable/user_profile_pic" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_edit"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:elevation="16dp"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editText_edit_nome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edit_back_color_black"
+                    android:hint="@string/nome_text"
+                    android:padding="15dp" />
+
+                <EditText
+                    android:id="@+id/editText_edit_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edit_back_color_black"
+                    android:hint="@string/email_text"
+                    android:padding="15dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editText_edit_phone_ddd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="8"
+                        android:background="@drawable/edit_back_color_black"
+                        android:hint="@string/ddd_text"
+                        android:inputType="phone"
+                        android:maxLength="2"
+                        android:padding="15dp" />
+
+                    <EditText
+                        android:id="@+id/editText_edit_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="3"
+                        android:background="@drawable/edit_back_color_black"
+                        android:hint="@string/phone_text"
+                        android:inputType="phone"
+                        android:padding="15dp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/endereco_text"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editText_edit_estado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="9"
+                        android:background="@drawable/edit_back_color_black"
+                        android:hint="@string/uf_text"
+                        android:inputType="text"
+                        android:maxLength="2"
+                        android:padding="15dp" />
+
+                    <EditText
+                        android:id="@+id/editText_edit_cidade"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="3"
+                        android:background="@drawable/edit_back_color_black"
+                        android:hint="@string/cidade_cidade"
+                        android:inputType="text"
+                        android:padding="15dp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editText_edit_bairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edit_back_color_black"
+                    android:hint="@string/bairro_text"
+                    android:inputType="text"
+                    android:padding="15dp" />
+
+                <EditText
+                    android:id="@+id/editText_edit_rua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edit_back_color_black"
+                    android:hint="@string/endereco_text"
+                    android:inputType="text"
+                    android:padding="15dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/button_save_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/edit_back_color_black"
+            android:padding="15dp"
+            android:text="@string/salvar_text" />
+
+    </LinearLayout>
+</ScrollView>

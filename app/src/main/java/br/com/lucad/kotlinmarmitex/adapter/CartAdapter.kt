@@ -24,17 +24,6 @@ class CartAdapter( val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolderCart, position: Int) {
-       /* arrayOrders[position].apply {
-            holder.texViewTitleMealCart.text = this.title
-            holder.texViewDescriptionMealCart.text = this.description
-            holder.texViewPriceMealCart.text = "R$" + this.price.toString()
-            this.images?.get(0)?.let {
-                getImageFromFirebase(holder.itemView, holder.imageViewCart,
-                    it
-                )
-            }
-        }*/
-
         CartObj.mealsList[position].apply {
             holder.texViewTitleMealCart.text = this.title
             holder.texViewDescriptionMealCart.text = this.description

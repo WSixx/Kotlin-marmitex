@@ -11,9 +11,4 @@
         android:icon="@drawable/ic_baseline_food_bank_24"
         android:title="@string/title_pedidos" />
 
-    <item
-        android:id="@+id/navigation_perfil"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/title_perfil" />
-
 </menu>

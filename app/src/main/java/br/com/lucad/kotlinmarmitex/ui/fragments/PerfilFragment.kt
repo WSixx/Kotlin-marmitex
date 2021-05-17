@@ -18,10 +18,4 @@ class PerfilFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_perfil, container, false)
     }
 
-    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(itemView, savedInstanceState)
-
-
-    }
-
 }
