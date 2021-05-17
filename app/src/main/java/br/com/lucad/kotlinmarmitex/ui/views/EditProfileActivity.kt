@@ -74,7 +74,7 @@ class EditProfileActivity : BaseActivity() {
 
     private fun updateUserProfileDetails() {
         if (checkIfPhoneIsEmpty()) {
-            progressEdit.visibility = View.VISIBLE
+            showMyProgressBar()
             buttonSave.isEnabled = false
             val userHashMap = HashMap<String, Any>()
             val phone = editProfilePhone.text.toString().trim()
