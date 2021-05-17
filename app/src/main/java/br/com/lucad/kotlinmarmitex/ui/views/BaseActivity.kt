@@ -1,8 +1,12 @@
 package br.com.lucad.kotlinmarmitex.ui.views
 
 import android.app.Dialog
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import br.com.lucad.kotlinmarmitex.R
 import com.google.android.material.snackbar.Snackbar
@@ -48,6 +52,21 @@ open class BaseActivity : AppCompatActivity() {
 
     fun hideMyProgressBar(){
         myProgressBar.hide()
+    }
+
+
+
+    fun hideSystemUI() {
+
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
     }
 
 }

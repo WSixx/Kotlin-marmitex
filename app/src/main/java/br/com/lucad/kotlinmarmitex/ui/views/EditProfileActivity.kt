@@ -26,7 +26,6 @@ class EditProfileActivity : BaseActivity() {
     private lateinit var progressEdit: ProgressBar
     private lateinit var toolbar: Toolbar
 
-
     private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {

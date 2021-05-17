@@ -67,7 +67,6 @@ class SettingsActivity : BaseActivity() {
 
     private fun getUserDetails(){
         SetUser().getUserInfo(this)
-
     }
 
     fun dataIsLoaded(user: User){
@@ -87,7 +86,7 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun dataLoading(){
-        progressBar.visibility = View.VISIBLE
+        showMyProgressBar()
         buttonSettingEdit.isEnabled = false
         buttonSettingLogout.isEnabled = false
     }

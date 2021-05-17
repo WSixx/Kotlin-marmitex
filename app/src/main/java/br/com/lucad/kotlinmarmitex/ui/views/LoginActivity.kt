@@ -3,6 +3,8 @@ package br.com.lucad.kotlinmarmitex.ui.views
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+import android.view.WindowInsetsController
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -46,6 +48,8 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        hideSystemUI()
+
         loadViews()
 
         createAccountInputsArray = arrayOf(editEmail, editPassword)
@@ -54,7 +58,7 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    private fun loadViews(){
+    private fun loadViews() {
         activityLogin = findViewById(R.id.activity_login)
 
         buttonSignIn = findViewById(R.id.button_signin)
@@ -70,7 +74,7 @@ class LoginActivity : BaseActivity() {
         progressLogin = findViewById(R.id.progress_login)
     }
 
-    private fun loadClicks(){
+    private fun loadClicks() {
         buttonSignIn.setOnClickListener {
             if (texViewLogin.isVisible) signIn()
         }
@@ -104,7 +108,7 @@ class LoginActivity : BaseActivity() {
     /* check if there's a signed-in user*/
     override fun onStart() {
         super.onStart()
-       val fireUser: FirebaseUser? = firebaseAuth.currentUser
+        val fireUser: FirebaseUser? = firebaseAuth.currentUser
         fireUser?.let {
             val user = User()
             SetUser().getUserInfo(this@LoginActivity)
@@ -161,7 +165,7 @@ class LoginActivity : BaseActivity() {
                     }
                 }
 
-                .addOnFailureListener {exception ->
+                .addOnFailureListener { exception ->
                     showErrorSnack(AuthExceptions().handleException(exception), true)
                     hideMyProgressBar()
                 }
@@ -173,24 +177,19 @@ class LoginActivity : BaseActivity() {
     }
 
     fun userIsLogged(user: User?) {
-        hideMyProgressBar()
-        if(user?.profileIsComplete == 0){
+        if (user?.profileIsComplete == 0) {
             val intent = Intent(this, EditProfileActivity::class.java)
             intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
             startActivity(intent)
-        }else{
+        } else {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
         finish()
     }
-
     private fun userBlankFields() {
-        showErrorSnack(Constants.BLANK_FIELD, true )
+        showErrorSnack(Constants.BLANK_FIELD, true)
     }
-
-
     private fun isNotEmpty(): Boolean = editEmail.text.toString().trim().isNotEmpty() &&
             editPassword.text.toString().trim().isNotEmpty()
-
 }

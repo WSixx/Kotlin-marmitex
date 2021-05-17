@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.texte_view_teste)
         val buttonMain = findViewById<Button>(R.id.button_main)
 
-
         title = username
         textView.text = username
 
