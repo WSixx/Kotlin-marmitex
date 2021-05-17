@@ -51,6 +51,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_rect"
         android:hint="Nome"
+        android:maxLines="1"
         android:visibility="gone"
         android:padding="18dp"
         app:layout_constraintBottom_toTopOf="@id/edit_email"
@@ -68,12 +69,33 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/button_rect"
         android:hint="@string/password_text"
+        android:textColorHint="@color/white"
         android:inputType="textPassword"
         android:padding="18dp"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_email" />
+
+    <EditText
+        android:id="@+id/edit_password_secondary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_rect"
+        android:hint="@string/password_text"
+        android:textColorHint="@color/black"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:padding="18dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_password" />
 
 
     <ImageView
@@ -101,6 +123,7 @@
         android:hint="@string/login_email"
         android:inputType="textEmailAddress"
         android:padding="18dp"
+        android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -133,14 +156,15 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:paddingHorizontal="24dp"
-        android:textSize="20sp"
+        android:layout_marginBottom="60dp"
         android:text="@string/casdatrar_text"
         android:textAlignment="center"
         android:textColor="@color/teal_700"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_signup" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
         android:id="@+id/button_signup"
@@ -158,6 +182,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_signin" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_password_secondary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

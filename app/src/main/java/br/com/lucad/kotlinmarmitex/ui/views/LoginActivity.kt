@@ -31,6 +31,7 @@ class LoginActivity : BaseActivity() {
     private lateinit var activityLogin: View
     private lateinit var editEmail: EditText
     private lateinit var editPassword: EditText
+    private lateinit var editPasswordSecondary: EditText
     private lateinit var editNomeUser: EditText
     private lateinit var texViewLogin: TextView
     private lateinit var texViewCadastrar: TextView
@@ -66,6 +67,7 @@ class LoginActivity : BaseActivity() {
 
         editEmail = findViewById(R.id.edit_email)
         editPassword = findViewById(R.id.edit_password)
+        editPasswordSecondary = findViewById(R.id.edit_password_secondary)
         editNomeUser = findViewById(R.id.edit_user_nome)
 
         texViewLogin = findViewById(R.id.text_view_login)
@@ -94,12 +96,14 @@ class LoginActivity : BaseActivity() {
             texViewLogin.text = getString(R.string.login_text)
             buttonSignUp.visibility = View.GONE
             buttonSignIn.visibility = View.VISIBLE
+            editPasswordSecondary.visibility = View.GONE
             editNomeUser.visibility = View.GONE
 
         } else {
             texViewCadastrar.text = getString(R.string.voltar_text)
             texViewLogin.text = getString(R.string.casdatrar_text)
             buttonSignUp.visibility = View.VISIBLE
+            editPasswordSecondary.visibility = View.VISIBLE
             buttonSignIn.visibility = View.GONE
             editNomeUser.visibility = View.VISIBLE
         }
@@ -144,36 +148,49 @@ class LoginActivity : BaseActivity() {
 
         showMyProgressBar()
 
-        if (isNotEmpty()) {
-            firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val setUser = SetUser()
-                        val user = User()
-                        val currentUserUID = firebaseAuth.currentUser?.uid
-
-                        user.let {
-                            it.id = currentUserUID
-                            it.username = userName
-                            it.email = userEmail
-                        }
-
-                        setUser.registerUser(this@LoginActivity, user)
-                        setUser.writeNewUser(user)
-                        userIsLogged(user)
-                        finish()
-                    }
-                }
-
-                .addOnFailureListener { exception ->
-                    showErrorSnack(AuthExceptions().handleException(exception), true)
-                    hideMyProgressBar()
-                }
-
-        } else {
-            userBlankFields()
-            hideMyProgressBar()
+        when (false) {
+            isNotEmpty() -> {
+                userBlankFields()
+                hideMyProgressBar()
+                return
+            }
+            passwordIsEqual() -> {
+                showErrorSnack("Senhas precisam ser iguais", true)
+                editPasswordSecondary.text.clear()
+                hideMyProgressBar()
+                return
+            }
+            emailValidate() -> {
+                showErrorSnack("Digite um email válido!!", true)
+                hideMyProgressBar()
+                return
+            }
         }
+        firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val setUser = SetUser()
+                    val user = User()
+                    val currentUserUID = firebaseAuth.currentUser?.uid
+
+                    user.let {
+                        it.id = currentUserUID
+                        it.username = userName
+                        it.email = userEmail
+                    }
+
+                    setUser.registerUser(this@LoginActivity, user)
+                    setUser.writeNewUser(user)
+                    userIsLogged(user)
+                    finish()
+                }
+            }
+
+            .addOnFailureListener { exception ->
+                showErrorSnack(AuthExceptions().handleException(exception), true)
+                hideMyProgressBar()
+            }
+
     }
 
     fun userIsLogged(user: User?) {
@@ -187,9 +204,20 @@ class LoginActivity : BaseActivity() {
         }
         finish()
     }
+
     private fun userBlankFields() {
         showErrorSnack(Constants.BLANK_FIELD, true)
     }
+
+    private fun emailValidate(): Boolean {
+        val regex = Regex("/^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?\$/i\n")
+        return regex.matches(editEmail.text.toString())
+    }
+
+    private fun passwordIsEqual(): Boolean {
+        return editPassword.text.toString().trim() == editPasswordSecondary.text.toString().trim()
+    }
+
     private fun isNotEmpty(): Boolean = editEmail.text.toString().trim().isNotEmpty() &&
             editPassword.text.toString().trim().isNotEmpty()
 }
