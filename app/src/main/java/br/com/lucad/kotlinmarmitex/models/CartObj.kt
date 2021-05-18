@@ -6,13 +6,13 @@ object CartObj {
 
 
     fun addCartItem(meal: Meal){
-        mealsList?.add(meal)
+        mealsList.add(meal)
         totalCart += meal.price
         print("TOTAL::::$totalCart")
     }
 
     fun removeCartItem(position: Int){
-        totalCart -= mealsList?.get(position)?.price!!
-        mealsList?.removeAt(position)
+        totalCart -= mealsList[position].price
+        mealsList.removeAt(position)
     }
 }

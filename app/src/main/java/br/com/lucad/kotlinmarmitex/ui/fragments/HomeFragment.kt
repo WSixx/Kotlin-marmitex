@@ -17,7 +17,6 @@ import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
 
-
 class HomeFragment : Fragment() {
 
     private lateinit var myRecycle: RecyclerView

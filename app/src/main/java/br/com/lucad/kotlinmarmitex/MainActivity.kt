@@ -10,7 +10,6 @@ import br.com.lucad.kotlinmarmitex.utils.Constants
 import br.com.lucad.kotlinmarmitex.utils.FirebaseUtils
 
 //TODO: NO FINAL ESTUDAR O ANDROID MVVM -> SE POSSIVEL COLOCAR AQUI
-//TODO: NO FINAL AJEITAR PARA Clean Architecture
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences:SharedPreferences
