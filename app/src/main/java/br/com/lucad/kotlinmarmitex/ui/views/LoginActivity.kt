@@ -206,7 +206,7 @@ class LoginActivity : BaseActivity() {
 
     private fun emailValidate(): Boolean {
         val regex = Regex("/^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?\$/i\n")
-        return regex.matches(editEmail.text.toString())
+        return !regex.matches(editEmail.text.toString())
     }
 
     private fun passwordIsEqual(): Boolean {
