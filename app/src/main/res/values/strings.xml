@@ -19,6 +19,7 @@
     <string name="cidade_cidade">Cidade</string>
     <string name="bairro_text">Bairro</string>
     <string name="salvar_text">Salvar</string>
+    <string name="password_secondary_hint">repita o password</string>
 
     <!-- TODO: ADICIONAR TODOS OS NOMES DO LAYOUT AQUI -->
 
