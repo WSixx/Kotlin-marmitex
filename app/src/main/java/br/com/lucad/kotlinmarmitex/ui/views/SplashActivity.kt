@@ -19,7 +19,7 @@ import br.com.lucad.kotlinmarmitex.R
 class SplashActivity : AppCompatActivity() {
 
     lateinit var foodIcon: ImageView
-    lateinit var constraintSplash: ConstraintLayout
+    private lateinit var constraintSplash: ConstraintLayout
     lateinit var textViewName: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
