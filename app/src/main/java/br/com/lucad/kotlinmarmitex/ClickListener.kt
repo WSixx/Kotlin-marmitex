@@ -2,7 +2,7 @@ package br.com.lucad.kotlinmarmitex
 
 interface ClickListener {
 
-    //TODO: MUDAR PARA USAR ESSA INTERFACE
+    //TODO: MUDAR MEUS ADAPTER PARA USAR ESSA INTERFACE
 
     fun onPositionClicked(position: Int)
 
