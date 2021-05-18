@@ -12,7 +12,6 @@ import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
 import br.com.lucad.kotlinmarmitex.models.CartObj
 import br.com.lucad.kotlinmarmitex.models.Meal
-import br.com.lucad.kotlinmarmitex.models.Meals
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.models.SlideModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -20,7 +19,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import java.lang.ref.WeakReference
 
 
-class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener: ClickListener, var listOfMeals: ArrayList<Meal>, var totalPrice: Double) :
+class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener: ClickListener, var totalPrice: Double) :
     FirestoreRecyclerAdapter<Meal, MealsViewHolder>(options) {
 
 
@@ -64,7 +63,6 @@ class MealsAdapter(options: FirestoreRecyclerOptions<Meal>, private val listener
         val imageSlider = holder.itemView.findViewById<ImageSlider>(R.id.image_view_adapter_meal)
         imageSlider.setImageList(imageList)
 
-        //model.images?.get(0)?.let { LoadImage().getImageFromFirebase(holder.itemView, imageViewMeal, it) }
     }
 
 }

@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
             override fun onLongClicked(position: Int) {
                 // callback performed on click
             }
-        }, listOfMeals, totalPrice )
+        }, totalPrice )
 
         myRecycle.adapter = adapter
         myRecycle.layoutManager = LinearLayoutManager(activity)

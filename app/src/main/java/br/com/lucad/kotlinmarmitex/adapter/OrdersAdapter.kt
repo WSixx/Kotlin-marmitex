@@ -4,15 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucad.kotlinmarmitex.ClickListener
 import br.com.lucad.kotlinmarmitex.R
-import br.com.lucad.kotlinmarmitex.models.CartObj
 import br.com.lucad.kotlinmarmitex.models.Order
-import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.models.SlideModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -41,7 +38,8 @@ class OrdersAdapter(options: FirestoreRecyclerOptions<Order>, private val listen
             holder.itemView.findViewById(R.id.text_view_adapter_order_data)
         val textviewOrderTotal: TextView =
             holder.itemView.findViewById(R.id.text_view_adapter_order_total)
-        val imageViewOrder: ImageView = holder.itemView.findViewById(R.id.image_view_adapter_order)
+        val imageViewOrder: ImageSlider =
+            holder.itemView.findViewById(R.id.image_view_adapter_order)
         val buttonOrderDetail: Button = holder.itemView.findViewById(R.id.button_item_order_detail)
 
         buttonOrderDetail.setOnClickListener {
@@ -52,30 +50,20 @@ class OrdersAdapter(options: FirestoreRecyclerOptions<Order>, private val listen
 
         val total = "R$%.2f".format(model.total)
 
-
         textviewOrderTotal.text = total
 
         textViewOrderMealData.text = "Feito em: " + model.date
 
-
-        model.meals?.get(0)?.images?.get(0)?.let {
-            getImageFromFirebase(
-                holder.itemView, imageViewOrder,
-                it
-            )
+        val imageList = ArrayList<SlideModel>()
+        for (meals in model.meals!!) {
+            for (images in meals.images!!) {
+                imageList.add(SlideModel(images))
+            }
         }
 
-    }
+        imageViewOrder.setImageList(imageList)
 
-    private fun getImageFromFirebase(itemView: View, imageView: ImageView, url: String) {
-        Glide.with(itemView)
-            .load(url)
-            .centerCrop() //4
-            .placeholder(R.drawable.ic_baseline_food_bank_24) //5
-            .error(R.drawable.ic_baseline_image_not_supported_24) //6
-            .into(imageView)
     }
-
 }
 
 class OrdersViewHolder(itemView: View, listener: ClickListener) :

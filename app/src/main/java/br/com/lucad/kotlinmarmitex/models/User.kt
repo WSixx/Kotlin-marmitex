@@ -57,6 +57,7 @@ class SetUser {
                 when (activity) {
                     is EditProfileActivity -> {
                         activity.afterSaveNewInformationSuccessful()
+                        activity.finish()
                     }
                 }
             }

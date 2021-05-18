@@ -154,6 +154,4 @@ class EditProfileActivity : BaseActivity() {
         startActivity(intent)
         finish()
     }
-
-
 }

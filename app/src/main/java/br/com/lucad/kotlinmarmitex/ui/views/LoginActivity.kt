@@ -3,8 +3,6 @@ package br.com.lucad.kotlinmarmitex.ui.views
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-import android.view.WindowInsetsController
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -114,9 +112,7 @@ class LoginActivity : BaseActivity() {
         super.onStart()
         val fireUser: FirebaseUser? = firebaseAuth.currentUser
         fireUser?.let {
-            val user = User()
             SetUser().getUserInfo(this@LoginActivity)
-            userIsLogged(user)
         }
     }
 
@@ -180,7 +176,6 @@ class LoginActivity : BaseActivity() {
                     }
 
                     setUser.registerUser(this@LoginActivity, user)
-                    setUser.writeNewUser(user)
                     userIsLogged(user)
                     finish()
                 }
@@ -202,7 +197,7 @@ class LoginActivity : BaseActivity() {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
-        finish()
+        finishAffinity()
     }
 
     private fun userBlankFields() {
