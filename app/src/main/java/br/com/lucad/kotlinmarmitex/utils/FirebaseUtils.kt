@@ -15,5 +15,4 @@ object FirebaseUtils {
     val firebaseDatabase: DatabaseReference = Firebase.database.reference
     val firebaseFirestore = Firebase.firestore
 
-
 }
