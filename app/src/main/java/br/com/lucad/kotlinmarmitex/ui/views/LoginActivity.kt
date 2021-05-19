@@ -18,10 +18,10 @@ import com.google.firebase.auth.FirebaseUser
 import io.github.cdimascio.dotenv.dotenv
 
 
-val dotenv = dotenv {
-    directory = "./assets/"
-    filename = "env" // use filename env, instead of .env
-} // <---- 1. Configure dotenv
+//val dotenv = dotenv {
+//    directory = "./assets/"
+//    filename = "env" // use filename env, instead of .env
+//} // <---- 1. Configure dotenv
 
 
 class LoginActivity : BaseActivity() {
@@ -32,7 +32,7 @@ class LoginActivity : BaseActivity() {
     private lateinit var editPasswordSecondary: EditText
     private lateinit var editNomeUser: EditText
     private lateinit var texViewLogin: TextView
-    private lateinit var texViewCadastrar: TextView
+    private lateinit var texViewSignup: TextView
     private lateinit var buttonSignIn: Button
     private lateinit var buttonSignUp: Button
     private lateinit var progressLogin: ProgressBar
@@ -42,7 +42,7 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var createAccountInputsArray: Array<EditText>
 
-    private val ev = dotenv["MY_EV"] // <---- 2. Get value from dotenv
+    //private val ev = dotenv["MY_EV"] // <---- 2. Get value from dotenv
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -54,7 +54,6 @@ class LoginActivity : BaseActivity() {
         createAccountInputsArray = arrayOf(editEmail, editPassword)
 
         loadClicks()
-
     }
 
     private fun loadViews() {
@@ -69,7 +68,7 @@ class LoginActivity : BaseActivity() {
         editNomeUser = findViewById(R.id.edit_user_nome)
 
         texViewLogin = findViewById(R.id.text_view_login)
-        texViewCadastrar = findViewById(R.id.textView_cadastrar)
+        texViewSignup = findViewById(R.id.textView_cadastrar)
 
         progressLogin = findViewById(R.id.progress_login)
     }
@@ -79,7 +78,7 @@ class LoginActivity : BaseActivity() {
             if (texViewLogin.isVisible) signIn()
         }
 
-        texViewCadastrar.setOnClickListener {
+        texViewSignup.setOnClickListener {
             buttonCadastrarClick()
         }
 
@@ -89,8 +88,8 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun buttonCadastrarClick() {
-        if (texViewCadastrar.text == getString(R.string.voltar_text)) {
-            texViewCadastrar.text = getString(R.string.casdatrar_text)
+        if (texViewSignup.text == getString(R.string.voltar_text)) {
+            texViewSignup.text = getString(R.string.casdatrar_text)
             texViewLogin.text = getString(R.string.login_text)
             buttonSignUp.visibility = View.GONE
             buttonSignIn.visibility = View.VISIBLE
@@ -98,7 +97,7 @@ class LoginActivity : BaseActivity() {
             editNomeUser.visibility = View.GONE
 
         } else {
-            texViewCadastrar.text = getString(R.string.voltar_text)
+            texViewSignup.text = getString(R.string.voltar_text)
             texViewLogin.text = getString(R.string.casdatrar_text)
             buttonSignUp.visibility = View.VISIBLE
             editPasswordSecondary.visibility = View.VISIBLE
