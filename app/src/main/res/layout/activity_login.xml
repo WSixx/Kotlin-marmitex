@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
     <EditText
         android:id="@+id/edit_user_nome"
@@ -45,6 +45,7 @@
         android:layout_marginBottom="@dimen/edit_text_16_margin"
         android:background="@drawable/button_rect"
         android:hint="Nome"
+        android:inputType="text"
         android:maxLines="1"
         android:padding="18dp"
         android:textColorHint="@color/white"
@@ -102,7 +103,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/text_view_login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
         app:srcCompat="@drawable/ic_new_white_lock" />
 
     <EditText
@@ -186,5 +187,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="182dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="47dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
