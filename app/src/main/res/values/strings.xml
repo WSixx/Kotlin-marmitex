@@ -7,7 +7,7 @@
     <string name="title_home">Home</string>
     <string name="title_pedidos">Pedidos</string>
     <string name="title_perfil">Perfil</string>
-    <string name="casdatrar_text">Cadastrar-se</string>
+    <string name="casdatrar_text">Cadastro</string>
     <string name="voltar_text">voltar</string>
     <string name="login_text">Login</string>
     <string name="nome_text">Nome</string>
@@ -20,6 +20,7 @@
     <string name="bairro_text">Bairro</string>
     <string name="salvar_text">Salvar</string>
     <string name="password_secondary_hint">repita o password</string>
+    <string name="lock_image_content_description">Imagem de um cadeado</string>
 
     <!-- TODO: ADICIONAR TODOS OS NOMES DO LAYOUT AQUI -->
 
