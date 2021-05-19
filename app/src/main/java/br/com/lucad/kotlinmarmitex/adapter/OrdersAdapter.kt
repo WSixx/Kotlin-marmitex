@@ -43,6 +43,8 @@ class OrdersAdapter(options: FirestoreRecyclerOptions<Order>, private val listen
         val buttonOrderDetail: Button = holder.itemView.findViewById(R.id.button_item_order_detail)
 
         buttonOrderDetail.setOnClickListener {
+
+           //TODO: FAZER A TELA DE DETALHES E É ISSO
             /*  val intent = Intent(it.context, PaymentActivity::class.java)
               intent.putExtra(Constants.MEALS_MODEL, model)
               it.context?.startActivity(intent)*/
